@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
 using System.Numerics;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,8 +23,7 @@ namespace HW1
     {
         static void Main(string[] args)
         {
-            List<int> x = new List<int>();                      //a int list containing the x values
-            List<int> y = new List<int>();                      //a int list containing the y values 
+            List<Point> points = new List<Point>();             //a list containing point objects
             Stopwatch sw = new Stopwatch();                     //creates stopwatch
 
             for (int i = Convert.ToInt32(Console.ReadLine()); i > 0; i--)
@@ -31,15 +32,41 @@ namespace HW1
 
                 string[] values = instring.Split(' ');
 
-                x.Add(Convert.ToInt32(values[0]));
-                y.Add(Convert.ToInt32(values[1]));
+                Point inPoint = new Point(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]));
+
+                points.Add(inPoint);           
             }
 
             sw.Start();
-            //write code here
-            Console.WriteLine(":)");
+            Console.WriteLine(findClosestPointsDistance(points));
             sw.Stop();
+
             Console.WriteLine("Time used: {0} seconds.", sw.Elapsed.TotalMilliseconds / 1000);
+        }
+
+        static double findClosestPointsDistance(List<Point> inPoints)
+        {
+            inPoints = inPoints.OrderBy(p => p.X).ToList();
+            double distanceX;
+            double distanceY;
+            double totalDistance;
+            double shortestDistance = double.MaxValue;
+            for (int i = 0; i < inPoints.Count() - 1; i++)
+            {
+                distanceX = (inPoints[i + 1].X - inPoints[i].X);
+                distanceX *= distanceX;
+                distanceY = (inPoints[i + 1].Y - inPoints[i].Y);
+                distanceY *= distanceY;
+
+                totalDistance = distanceX + distanceY;
+                totalDistance = Math.Sqrt(totalDistance);
+                if (shortestDistance > totalDistance)
+                {
+                    shortestDistance = totalDistance;
+                }
+            }
+
+            return shortestDistance;
         }
     }
 }
