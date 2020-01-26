@@ -46,28 +46,30 @@ namespace HW1
 
         static double findClosestPointsDistance(List<Point> inPoints)
         {
-            inPoints = inPoints.OrderBy(p => p.X).ToList();
-            double distanceX;
-            double distanceY;
-            double totalDistance;
-            double shortestDistance = double.MaxValue;
-            for (int i = 0; i < inPoints.Count() - 1; i++)
+            //inPoints = inPoints.OrderBy(p => p.X).ToList();
+            double distanceX;                          //record the current distance between X
+            double distanceY;                          //recorod the current distance between Y
+            double totalDistance;                      //record the current total distance for comparison
+            double shortestDistance = double.MaxValue; //initially set the shortest distance to the max double value so it will be set on the first pass
+
+            for (int i = 0; i < inPoints.Count() - 2; i++)
             {
-
-                distanceX = (inPoints[i + 1].X - inPoints[i].X);
-                distanceX *= distanceX;
-                distanceY = (inPoints[i + 1].Y - inPoints[i].Y);
-                distanceY *= distanceY;
-
-                totalDistance = distanceX + distanceY;
-                totalDistance = Math.Sqrt(totalDistance);
-                if (shortestDistance > totalDistance)
+                for(int j = (i + 1); j < inPoints.Count() - 1; j++)
                 {
-                    shortestDistance = totalDistance;
+                    distanceX = (inPoints[i].X - inPoints[j].X);
+                    distanceX *= distanceX;
+                    distanceY = (inPoints[i].Y - inPoints[j].Y);
+                    distanceY *= distanceY;
+
+                    totalDistance = distanceX + distanceY;
+                    totalDistance = Math.Sqrt(totalDistance);
+                    if (shortestDistance > totalDistance)
+                    {
+                        shortestDistance = totalDistance;
+                    }
                 }
             }
-
-            return shortestDistance;
+                return shortestDistance;
         }
     }
 }
