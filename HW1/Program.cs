@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Numerics;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -46,11 +45,11 @@ namespace HW1
 
         static double findClosestPointsDistance(List<Point> inPoints)
         {
-            //inPoints = inPoints.OrderBy(p => p.X).ToList();
-            double distanceX;                          //record the current distance between X
-            double distanceY;                          //recorod the current distance between Y
-            double totalDistance;                      //record the current total distance for comparison
-            double shortestDistance = double.MaxValue; //initially set the shortest distance to the max double value so it will be set on the first pass
+            inPoints = inPoints.OrderBy(p => p.X).ToList(); //order the points so the compution processes faster
+            double distanceX;                               //record the current distance between X
+            double distanceY;                               //recorod the current distance between Y
+            double totalDistance;                           //record the current total distance for comparison
+            double shortestDistance = double.MaxValue;      //initially set the shortest distance to the max double value so it will be set on the first pass
 
             for (int i = 0; i < inPoints.Count() - 2; i++)
             {
