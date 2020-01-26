@@ -53,6 +53,7 @@ namespace HW1
             double shortestDistance = double.MaxValue;
             for (int i = 0; i < inPoints.Count() - 1; i++)
             {
+
                 distanceX = (inPoints[i + 1].X - inPoints[i].X);
                 distanceX *= distanceX;
                 distanceY = (inPoints[i + 1].Y - inPoints[i].Y);
