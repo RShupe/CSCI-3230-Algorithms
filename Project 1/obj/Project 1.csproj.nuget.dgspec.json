@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\HW1\\HW1.csproj": {}
+    "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\Project 1\\Project 1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\HW1\\HW1.csproj": {
+    "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\Project 1\\Project 1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\HW1\\HW1.csproj",
-        "projectName": "HW1",
-        "projectPath": "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\HW1\\HW1.csproj",
+        "projectUniqueName": "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\Project 1\\Project 1.csproj",
+        "projectName": "Project 1",
+        "projectPath": "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\Project 1\\Project 1.csproj",
         "packagesPath": "C:\\Users\\ryant\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\HW1\\obj\\",
+        "outputPath": "C:\\Users\\ryant\\Documents\\GitHub\\CSCI-3230-Algorithms\\Project 1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
