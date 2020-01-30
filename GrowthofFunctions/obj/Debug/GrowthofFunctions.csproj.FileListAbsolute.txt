@@ -1,0 +1,6 @@
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\GrowthofFunctions\bin\Debug\GrowthofFunctions.exe.config
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\GrowthofFunctions\bin\Debug\GrowthofFunctions.exe
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\GrowthofFunctions\bin\Debug\GrowthofFunctions.pdb
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\GrowthofFunctions\obj\Debug\GrowthofFunctions.csprojAssemblyReference.cache
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\GrowthofFunctions\obj\Debug\GrowthofFunctions.exe
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\GrowthofFunctions\obj\Debug\GrowthofFunctions.pdb
