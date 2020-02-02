@@ -7,7 +7,8 @@ using System.Linq;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //	File Name:         Program.cs
-//	Description:       This is the main file for Project 1. UPS Driver has multiple points, find the optimal route for the UPS Driver to take. 
+//	Description:       This is the main file for Project 1. UPS Driver has multiple points, 
+//                      find the optimal route for the UPS Driver to take. 
 //
 //	Course:            CSCI 3230 - Algorithms
 //	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University
