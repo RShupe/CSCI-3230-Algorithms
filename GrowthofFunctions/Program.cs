@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Numerics;
 
 namespace Lab_2
@@ -14,11 +15,16 @@ namespace Lab_2
             {
                 Stopwatch sw = new Stopwatch();
                 Console.WriteLine("Enter a number: ");
-                ulong input = Convert.ToUInt64(Console.ReadLine());
+                //ulong input = Convert.ToUInt64(Console.ReadLine());
+                //String input = Console.ReadLine();
+                //BigInteger nice = BigInteger.Parse(input);          
+                // int input = Convert.ToInt32(Console.ReadLine());
 
+
+                int input = Convert.ToInt32(Console.ReadLine());
 
                 sw.Start();
-                nFactorial(input);
+                twoPow(input);
                 sw.Stop();
 
                 Console.WriteLine("n = " + input);
@@ -26,9 +32,32 @@ namespace Lab_2
             }
         }
 
-        private static void nsquaredgrowth(int n)
+        public static double twoPow(int n)
         {
-            int sum = 0;
+            if (n == 0)
+            {
+                return 1.0;
+            }
+            else
+            {
+                return 2.0 * twoPow(n - 1);
+            }
+                
+        }
+
+        private static void ngrowth(ulong n)
+        {
+            ulong sum = 0;
+            for (ulong i = 0; i < n; i++)
+            {
+                sum++;
+            }
+            Console.WriteLine(sum);
+        }
+
+        private static void nsquaredgrowth(BigInteger n)
+        {
+            BigInteger sum = 0;
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -73,20 +102,23 @@ namespace Lab_2
 
         private static void lgngrowth(BigInteger n)
         {
-            while (n != 1)
+            BigInteger x = n;
+            while (x != 1)
             {
-                n = n / 2;
+                x /= 2;
             }
         }
 
-        private static void nFactorial(ulong n)
+        private static void nFactorial(uint n)
         {
-            ulong output = n;
-            for(ulong i = n - 1; i >= 1; i--)
+            BigInteger output = n;
+
+            for (uint i = 1; i < n; i++)
             {
                 output *= i;
             }
-            Console.WriteLine(output);
+
+            // Console.WriteLine(output);
         }
     }
 }
