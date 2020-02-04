@@ -28,6 +28,7 @@ namespace Project_1
         static void Main(string[] args)
         {
             List<Point> points = new List<Point>();             //a list containing point objects
+            
             Stopwatch sw = new Stopwatch();                     //creates stopwatch
 
             for (int i = Convert.ToInt32(Console.ReadLine()); i > 0; i--)
@@ -42,10 +43,50 @@ namespace Project_1
             }
 
             sw.Start();
-            //Console.WriteLine(findClosestPointsDistance(points));
+            Console.WriteLine(findShortestRoute(points));
             sw.Stop();
 
             Console.WriteLine("Time used: {0} seconds.", sw.Elapsed.TotalMilliseconds / 1000);
+        }
+
+        static double[,] fillDistanceTable(int x, int y, Point pointA)
+        {
+            double[,] distanceTable = new double [x, y];    //distance table to create
+            double distanceX;                               //record the current distance between X
+            double distanceY;                               //recorod the current distance between Y
+            double totalDistance;                           //record the current total distance for comparison
+
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                { 
+                    distanceX = pointA.X - i;
+                    distanceX *= distanceX;
+                    distanceY =  pointA.Y - j;
+                    distanceY *= distanceY;
+
+                    totalDistance = distanceX + distanceY;
+                    totalDistance = Math.Sqrt(totalDistance);
+                    distanceTable[i, j] = totalDistance;
+                }
+            }
+
+            return distanceTable;
+        }
+
+        static double getDistance(double[,] inTable, Point pointToFind)
+        {
+            double distance = inTable[pointToFind.X, pointToFind.Y];
+            return distance;
+        }
+
+        static double findShortestRoute(List<Point> inPoints)
+        {
+            int numberOfPoints = inPoints.Count();
+            double[,] distanceTable;                               //creates a table that stores the distance between points
+            distanceTable = fillDistanceTable(inPoints[numberOfPoints - 1].X + 1, inPoints[numberOfPoints - 1 ].Y + 1, inPoints[0]);
+            double distance = getDistance(distanceTable, inPoints[1]);
+            return 0.0;
         }
     }
 }
