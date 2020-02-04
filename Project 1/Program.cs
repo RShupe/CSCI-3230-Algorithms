@@ -29,7 +29,7 @@ namespace Project_1
         static void Main(string[] args)
         {
             List<Point> points = new List<Point>();             //a list containing point objects
-            
+
             Stopwatch sw = new Stopwatch();                     //creates stopwatch
 
             for (int i = Convert.ToInt32(Console.ReadLine()); i > 0; i--)
@@ -60,7 +60,7 @@ namespace Project_1
         /// 
         static double[,] fillDistanceTable(int x, int y, Point pointA)
         {
-            double[,] distanceTable = new double [x, y];    //distance table to create and fill
+            double[,] distanceTable = new double[x, y];    //distance table to create and fill
             double distanceX;                               //record the current distance between X
             double distanceY;                               //recorod the current distance between Y
             double totalDistance;                           //record distance between the points
@@ -68,10 +68,10 @@ namespace Project_1
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
-                { 
+                {
                     distanceX = pointA.X - i;
                     distanceX *= distanceX;
-                    distanceY =  pointA.Y - j;
+                    distanceY = pointA.Y - j;
                     distanceY *= distanceY;
 
                     totalDistance = distanceX + distanceY;
@@ -105,17 +105,17 @@ namespace Project_1
 
         static String findShortestRoute(List<Point> inPoints)
         {
-            
+
             int numberOfPoints = inPoints.Count();                 //number of points in the array
             double totalDistance = 0;                                  //double to store the total distance 
             double distance;                                       //get the distance from a point
             double smallestDistance = Double.MaxValue;             //hold the smallest distance between any two points
             double[,] distanceTable;                               //creates a table that stores the distance between points
-            Point zero = new Point(0,0);                           //create a zero point so we can use it at the beginning and end
+            Point zero = new Point(0, 0);                           //create a zero point so we can use it at the beginning and end
             Point nextPoint = new Point();
 
 
-            inPoints = inPoints.OrderBy(p => p.X).ToList();        
+            inPoints = inPoints.OrderBy(p => p.X).ToList();
             int XPoint = inPoints[numberOfPoints - 1].X + 1;       //record the highest X value to fill the table
             inPoints = inPoints.OrderBy(p => p.Y).ToList();
             int YPoint = inPoints[numberOfPoints - 1].Y + 1;       //record the highest Y value to fill the table
@@ -125,10 +125,10 @@ namespace Project_1
             distanceTable = fillDistanceTable(XPoint, YPoint, zero);
 
             //loop to find the shortest distance initial
-            for(int i = 0; i < numberOfPoints; i++)
+            for (int i = 0; i < numberOfPoints; i++)
             {
-               distance = getDistance(distanceTable, inPoints[i]);
-                if(i == 0)
+                distance = getDistance(distanceTable, inPoints[i]);
+                if (i == 0)
                 {
                     smallestDistance = distance;
                 }
@@ -145,9 +145,9 @@ namespace Project_1
 
             //totalDistance = smallestDistance;
             //while there is still points left to traverse
-            while(numberOfPoints != 1)
+            while (numberOfPoints != 1)
             {
-                
+
                 smallestDistance = Double.MaxValue;
                 distanceTable = fillDistanceTable(XPoint, YPoint, nextPoint); //next point is the current point right here
                 inPoints.RemoveAt(nextPointPos);                              //remove the current point from the list
@@ -161,7 +161,7 @@ namespace Project_1
                         smallestDistance = distance;
                         totalDistance += smallestDistance;
                         nextPointPos = i;                       //set the next point to remove
-                        
+
                     }
                 }
 
@@ -173,7 +173,7 @@ namespace Project_1
             distanceTable = fillDistanceTable(XPoint, YPoint, nextPoint);
             distance = getDistance(distanceTable, zero);
             totalDistance += distance;
-           
+
 
             totalDistance = Math.Truncate(totalDistance * 100) / 100;
 
