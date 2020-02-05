@@ -24,7 +24,7 @@ namespace Lab_2
                 int input = Convert.ToInt32(Console.ReadLine());
 
                 sw.Start();
-                twoPow(input);
+                lgngrowth(input);
                 sw.Stop();
 
                 Console.WriteLine("n = " + input);
@@ -32,18 +32,6 @@ namespace Lab_2
             }
         }
 
-        public static double twoPow(int n)
-        {
-            if (n == 0)
-            {
-                return 1.0;
-            }
-            else
-            {
-                return 2.0 * twoPow(n - 1);
-            }
-                
-        }
 
         private static void ngrowth(ulong n)
         {
@@ -65,6 +53,14 @@ namespace Lab_2
                     sum = sum + 1;
                 }
             }
+        }
+
+        public static long TwoPow(int number)
+        {
+            if (number <= 1)
+                return number;
+
+            return TwoPow(number - 1) + TwoPow(number - 2);
         }
 
         private static void ncubedgrowth(int n)

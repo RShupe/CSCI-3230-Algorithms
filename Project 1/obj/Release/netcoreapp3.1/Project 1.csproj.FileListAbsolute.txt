@@ -1,0 +1,10 @@
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\bin\Release\netcoreapp3.1\Project 1.exe
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\bin\Release\netcoreapp3.1\Project 1.deps.json
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\bin\Release\netcoreapp3.1\Project 1.runtimeconfig.json
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\bin\Release\netcoreapp3.1\Project 1.runtimeconfig.dev.json
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\bin\Release\netcoreapp3.1\Project 1.dll
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\bin\Release\netcoreapp3.1\Project 1.pdb
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\obj\Release\netcoreapp3.1\Project 1.AssemblyInfoInputs.cache
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\obj\Release\netcoreapp3.1\Project 1.AssemblyInfo.cs
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\obj\Release\netcoreapp3.1\Project 1.dll
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\obj\Release\netcoreapp3.1\Project 1.pdb
