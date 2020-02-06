@@ -1,0 +1,6 @@
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\bin\Debug\Project 1.exe.config
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\bin\Debug\Project 1.exe
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\bin\Debug\Project 1.pdb
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\obj\Debug\Project 1.csprojAssemblyReference.cache
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\obj\Debug\Project 1.exe
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 1\obj\Debug\Project 1.pdb

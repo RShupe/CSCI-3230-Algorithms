@@ -24,8 +24,9 @@ namespace Project_1
         /// </summary>
         /// <param name="string[] args"></param>
         ///
-        public static double shortestDistance = Double.MaxValue;
-        private static int[] shortestPerm;
+        static double shortestDistance = Double.MaxValue;
+        static int[] shortestPerm = new int[13];
+        static double[,] distanceTable = new double[20, 20];
 
         private static void Main(string[] args)
         {
@@ -43,26 +44,73 @@ namespace Project_1
 
                 points.Add(inPoint);
             }
+            
 
             sw.Start();
             Console.WriteLine(findShortestRoute(points));
             sw.Stop();
 
-            Console.WriteLine("Time used: {0} seconds.", sw.Elapsed.TotalMilliseconds / 1000);
+            Console.WriteLine("\t\t     Time used: {0} seconds", sw.Elapsed.TotalMilliseconds / 1000);
             Console.ReadLine();
+        }
+
+        private static void fillDistanceTable(List<Point> inPoints)
+        {
+
+            List<Point> AllPoints = new List<Point>();      // List of all points from start thru user input
+            
+            int PCount = inPoints.Count;                    // Number of points
+            Point FromPnt;                                  // From Point
+            Point ToPnt;                                    // To Point
+            double distanceX;                               // record the distance between Xs
+            double distanceY;                               // record the distance between Ys
+            double totalDistance;                           // record the total distance
+            Point zero = new Point(0, 0);
+            AllPoints.Add(zero);                            // Add starting point to list
+            for (int i = 0; i < PCount; i++)
+            {
+                AllPoints.Add(inPoints[i]);         // Add all user input points to list
+            }
+
+            PCount++;
+
+            // Number of points in AllPoints since (0,0) was added
+            for (int i = 0; i < PCount; i++)
+            {
+                FromPnt = AllPoints[i];                 // Set From Point for calculation
+                for (int j = i; j < PCount; j++)
+                {
+                    ToPnt = AllPoints[j];               // Set To Point for calculation
+                    // d = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+                    distanceX = (ToPnt.X - FromPnt.X);
+                    distanceX *= distanceX;
+                    distanceY = (ToPnt.Y - FromPnt.Y);
+                    distanceY *= distanceY;
+                    totalDistance = distanceX + distanceY;
+                    totalDistance = Math.Sqrt(totalDistance);
+                    distanceTable[i, j] = totalDistance;
+                    if (i != j)
+                    {            // saves time from recalc distance between same 2 points
+                        distanceTable[j, i] = totalDistance;
+                    }
+                }
+            }
         }
 
         public static String findShortestRoute(List<Point> inPoints)
         {
             int[] permPath = new int[inPoints.Count];
+            
             for (int i = 0; i < permPath.Length; i++)
             {
                 permPath[i] = 1 + i;
             }
 
             String output = "";
-
+            
+            fillDistanceTable(inPoints);
             calculatePerm(permPath, inPoints.Count, inPoints);
+
             output += "0 ";
             for (int i = 0; i < inPoints.Count; i++)
             {
@@ -70,80 +118,66 @@ namespace Project_1
             }
             output += "0";
 
-            //shortestDistance = Math.Truncate(shortestDistance * 100) / 100;
+            shortestDistance = Math.Truncate(shortestDistance * 100) / 100;
 
-            return "The total distance is: " + shortestDistance + "\n The optimal route is: " + output;
+            return "The total shortest distance is: " + shortestDistance + "\n \t  The optimal route is: " + output;
         }
 
-        //editmore
         private static void calculatePerm(int[] currentPerm, int permSize, List<Point> inPoints)
         {
-            List<Point> zeroPath = new List<Point>();
-            Point zero = new Point(0, 0);
-
             // if size becomes 1 then it creates a path of points corresponding to the permutation calculated
             if (permSize == 1)
             {
-                zeroPath.Add(zero);
-                for (int i = 0; i < inPoints.Count; i++)
-                {
-                    zeroPath.Add(inPoints[currentPerm[i] - 1]);
-                }
-                zeroPath.Add(zero);
-
-                calculateDistance(currentPerm, zeroPath);
+                calculateDistance(currentPerm);
             }
-
-            for (int i = 0; i < permSize; i++)
+            if(permSize != 1)
             {
-                calculatePerm(currentPerm, permSize - 1, inPoints);
+                for (int i = 0; i < permSize; i++)
+                {
+                    calculatePerm(currentPerm, permSize - 1, inPoints);
 
-                if (permSize % 2 == 1)
-                {
-                    int num = currentPerm[0];
-                    currentPerm[0] = currentPerm[permSize - 1];
-                    currentPerm[permSize - 1] = num;
-                }
-                else
-                {
-                    int num = currentPerm[i];
-                    currentPerm[i] = currentPerm[permSize - 1];
-                    currentPerm[permSize - 1] = num;
+                    if (permSize % 2 == 1)
+                    {
+                        int num = currentPerm[0];
+                        currentPerm[0] = currentPerm[permSize - 1];
+                        currentPerm[permSize - 1] = num;
+                    }
+                    else
+                    {
+                        int num = currentPerm[i];
+                        currentPerm[i] = currentPerm[permSize - 1];
+                        currentPerm[permSize - 1] = num;
+                    }
                 }
             }
+
         }
 
-        private static void calculateDistance(int[] Permutation, List<Point> inPoints)
+        private static void calculateDistance(int[] Permutation)
         {
-            double distanceX;                               //record the current distance between X
-            double distanceY;                               //recorod the current distance between Y
-            double totalDistance;                           //record the current total distance for comparison
-            double overallDistance = 0;
-            Point currentPoint;
-            Point NxtPoint;
+            int PCount = Permutation.Length;                 // Number of points in user input
+            double stepDistance;                            // record the current distance between points
+            double overallDistance = 0;                     // record the current overall distance
 
-            //calculates the distance between all the points.
-            for (int i = 0; i < Permutation.Length + 1; i++)
+            stepDistance = distanceTable[0, Permutation[0]];           // get distance from 0,0 to first point
+            overallDistance += stepDistance;
+
+            for (int i = 0; i < PCount - 1; i++)
             {
-                currentPoint = inPoints[i];
-                NxtPoint = inPoints[i + 1];
-
-                distanceX = (currentPoint.X - NxtPoint.X);
-                distanceX *= distanceX;
-                distanceY = (currentPoint.Y - NxtPoint.Y);
-                distanceY *= distanceY;
-
-                totalDistance = distanceX + distanceY;
-                totalDistance = Math.Sqrt(totalDistance);
-                overallDistance += totalDistance;
+                stepDistance = distanceTable[Permutation[i], Permutation[i + 1]];  // get distance from point to point for user input
+                overallDistance += stepDistance;
             }
 
-            //save permutation and distance if there is a new one.
+            stepDistance = distanceTable[Permutation[PCount - 1], 0];   // get distance from last point to 0,0
+            overallDistance += stepDistance;
+
+            // save permutation and distance if there is a new one.
             if (overallDistance < shortestDistance)
             {
                 shortestDistance = overallDistance;
                 shortestPerm = Permutation;
             }
+
         }
     }
 }
