@@ -25,7 +25,10 @@ namespace Project_1
         /// <param name="string[] args"></param>
         ///
         static double shortestDistance = Double.MaxValue;
+
         static int[] shortestPerm = new int[13];
+
+        static string output = "";
         static double[,] distanceTable = new double[20, 20];
 
         private static void Main(string[] args)
@@ -106,17 +109,10 @@ namespace Project_1
                 permPath[i] = 1 + i;
             }
 
-            String output = "";
+            //String output = "";
             
             fillDistanceTable(inPoints);
             calculatePerm(permPath, inPoints.Count, inPoints);
-
-            output += "0 ";
-            for (int i = 0; i < inPoints.Count; i++)
-            {
-                output += shortestPerm[i] + " ";
-            }
-            output += "0";
 
             shortestDistance = Math.Truncate(shortestDistance * 100) / 100;
 
@@ -176,6 +172,14 @@ namespace Project_1
             {
                 shortestDistance = overallDistance;
                 shortestPerm = Permutation;
+
+                output = "";
+                output += "0 ";
+                for (int i = 0; i < Permutation.Length; i++)
+                {
+                    output += shortestPerm[i] + " ";
+                }
+                output += "0";
             }
 
         }

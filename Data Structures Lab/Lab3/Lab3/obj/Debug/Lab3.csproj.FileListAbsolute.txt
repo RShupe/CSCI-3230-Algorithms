@@ -1,0 +1,12 @@
+C:\Users\shuper\source\repos\Lab3\Lab3\bin\Debug\Lab3.exe.config
+C:\Users\shuper\source\repos\Lab3\Lab3\bin\Debug\Lab3.exe
+C:\Users\shuper\source\repos\Lab3\Lab3\bin\Debug\Lab3.pdb
+C:\Users\shuper\source\repos\Lab3\Lab3\obj\Debug\Lab3.csprojAssemblyReference.cache
+C:\Users\shuper\source\repos\Lab3\Lab3\obj\Debug\Lab3.exe
+C:\Users\shuper\source\repos\Lab3\Lab3\obj\Debug\Lab3.pdb
+E:\ETSU\Algorithms\Lab3\Lab3\bin\Debug\Lab3.exe.config
+E:\ETSU\Algorithms\Lab3\Lab3\bin\Debug\Lab3.exe
+E:\ETSU\Algorithms\Lab3\Lab3\bin\Debug\Lab3.pdb
+E:\ETSU\Algorithms\Lab3\Lab3\obj\Debug\Lab3.csprojAssemblyReference.cache
+E:\ETSU\Algorithms\Lab3\Lab3\obj\Debug\Lab3.exe
+E:\ETSU\Algorithms\Lab3\Lab3\obj\Debug\Lab3.pdb
