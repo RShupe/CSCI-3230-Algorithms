@@ -143,12 +143,12 @@ namespace Project_1
         /// <param name="int permSize"></param>
         /// <param name="List<Point> inPoints"></param>
 
-        private static void CalculatePerm(int[] currentPerm, int permSize, List<Point> inPoints)
+        private static void CalculatePerm(int[] currentPerm, int permSize, List<Point> inPoints )
         {
             // if size becomes 1 then it creates a path of points corresponding to the permutation calculated
             if (permSize == 1)
             {
-                if (currentPerm[0] < currentPerm[permSize])
+                if (currentPerm[0] < currentPerm[permSize] )
                 {
                     CalculateDistance(currentPerm);
                 }
