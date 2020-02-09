@@ -1,0 +1,6 @@
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\bin\Release\Lab3.exe.config
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\bin\Release\Lab3.exe
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\bin\Release\Lab3.pdb
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\obj\Release\Lab3.exe
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\obj\Release\Lab3.pdb
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\obj\Release\Lab3.csprojAssemblyReference.cache

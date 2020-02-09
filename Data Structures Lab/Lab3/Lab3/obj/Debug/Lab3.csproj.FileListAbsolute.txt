@@ -10,3 +10,9 @@ E:\ETSU\Algorithms\Lab3\Lab3\bin\Debug\Lab3.pdb
 E:\ETSU\Algorithms\Lab3\Lab3\obj\Debug\Lab3.csprojAssemblyReference.cache
 E:\ETSU\Algorithms\Lab3\Lab3\obj\Debug\Lab3.exe
 E:\ETSU\Algorithms\Lab3\Lab3\obj\Debug\Lab3.pdb
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\bin\Debug\Lab3.exe.config
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\bin\Debug\Lab3.exe
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\bin\Debug\Lab3.pdb
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\obj\Debug\Lab3.csprojAssemblyReference.cache
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\obj\Debug\Lab3.exe
+C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Data Structures Lab\Lab3\Lab3\obj\Debug\Lab3.pdb
