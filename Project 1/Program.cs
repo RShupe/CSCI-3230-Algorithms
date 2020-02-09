@@ -153,14 +153,12 @@ namespace Project_1
                     CalculateDistance(currentPerm);
                 }
             }
-
-            if (permSize != 1)
-            {
+            else { 
                 for (int i = 0; i < permSize; i++)
                 {
                     CalculatePerm(currentPerm, permSize - 1, inPoints);
 
-                    if (permSize % 2 == 1)
+                    if ((permSize & 1) == 1)
                     {
                         int num = currentPerm[0];       //save the first point in the current permutation
                         currentPerm[0] = currentPerm[permSize - 1];
