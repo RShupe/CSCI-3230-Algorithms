@@ -14,7 +14,25 @@ using System.Drawing;
 //	Created:           Monday, Jan 27 2020
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///
+/*
+ 13
+625 40
+625 9960
+-625 40
+-625 9960
+1250 9840
+-1250 9840
+0 10000
+0 5000
+0 -10000
+2500 9330
+-2500 9330
+5000 5000
+-5000 5000
+
+    ON MY HOME PC, 13 POINTS IS 95 SECONDS
+*/
+
 namespace Project_1
 {
     internal class Program
@@ -24,10 +42,10 @@ namespace Project_1
         /// </summary>
         /// <param name="string[] args"></param>
         ///
-        static double shortestDistance = Double.MaxValue;   //global variable to store the shortestDistance
-        static string output;                               //global string variable to hold the output permutation
-        static int[] shortestPerm = new int[20];            //integer array to store the shortest permutation
-        static double[,] distanceTable = new double[20, 20];//distance table to generate all the distances between points
+        private static double shortestDistance = Double.MaxValue;   //global variable to store the shortestDistance
+        private static string output;                               //global string variable to hold the output permutation
+        private static int[] shortestPerm = new int[20];            //integer array to store the shortest permutation
+        private static double[,] distanceTable = new double[20, 20];//distance table to generate all the distances between points
 
         private static void Main(string[] args)
         {
@@ -46,7 +64,6 @@ namespace Project_1
                 points.Add(inPoint);
             }
 
-
             sw.Start();
             Console.WriteLine(FindShortestRoute(points));
             sw.Stop();
@@ -62,7 +79,6 @@ namespace Project_1
         ///
         private static void FillDistanceTable(List<Point> inPoints)
         {
-
             List<Point> AllPoints = new List<Point>();      // List of all points from start thru user input
 
             int PCount = inPoints.Count;                    // Number of points
@@ -71,7 +87,7 @@ namespace Project_1
             double distanceX;                               // record the distance between Xs
             double distanceY;                               // record the distance between Ys
             double totalDistance;                           // record the total distance
-            Point zero = new Point(0, 0);
+            Point zero = new Point(0, 0);                   //create a point 0,0 for calculation
             AllPoints.Add(zero);                            // Add starting point to list
             for (int i = 0; i < PCount; i++)
             {
@@ -120,18 +136,18 @@ namespace Project_1
                 permPath[i] = 1 + i;                            //fills the array with the corresponding point number
             }
 
-            FillDistanceTable(inPoints);                        //create the distance table
+            FillDistanceTable(inPoints);                        //create the distance table between all of the points
             CalculatePerm(permPath, inPoints.Count, inPoints);  //calculate the shortest permutation and distance
 
             output = "";
             output += "0 ";
             for (int i = 0; i < inPoints.Count; i++)
             {
-                output += shortestPerm[i] + " ";
+                output += shortestPerm[i] + " ";                //generate the output string permutation with beginning and ending 0
             }
             output += "0";
 
-            shortestDistance = Math.Truncate(shortestDistance * 100) / 100;
+            shortestDistance = Math.Truncate(shortestDistance * 100) / 100; //round decimal spots for output
 
             return "The total shortest distance is: " + shortestDistance + "\n \t  The optimal route is: " + output;
         }
@@ -143,40 +159,41 @@ namespace Project_1
         /// <param name="int permSize"></param>
         /// <param name="List<Point> inPoints"></param>
 
-        private static void CalculatePerm(int[] currentPerm, int permSize, List<Point> inPoints )
+        private static void CalculatePerm(int[] currentPerm, int permSize, List<Point> inPoints)
         {
-            // if size becomes 1 then it creates a path of points corresponding to the permutation calculated
+            int swapNumber;                             //the number that is tmep stored that is going to be swapped with another one at a different location
+            // if size becomes 1 then we have a new perm and we need to calculate distance.
             if (permSize == 1)
             {
-                if (currentPerm[0] < currentPerm[permSize] )
+                if (currentPerm[0] < currentPerm[permSize])
                 {
-                    CalculateDistance(currentPerm);
+                    CalculateDistance(currentPerm);     //with a new perm calculated, generate the current distance between all points.
                 }
             }
-            else { 
+            else
+            {
                 for (int i = 0; i < permSize; i++)
                 {
-                    CalculatePerm(currentPerm, permSize - 1, inPoints);
+                    CalculatePerm(currentPerm, permSize - 1, inPoints); //call this function again to create a new permutation
 
                     if ((permSize & 1) == 1)
                     {
-                        int num = currentPerm[0];       //save the first point in the current permutation
+                        swapNumber = currentPerm[0];       //save the first point in the current permutation
                         currentPerm[0] = currentPerm[permSize - 1];
-                        currentPerm[permSize - 1] = num;
+                        currentPerm[permSize - 1] = swapNumber;
                     }
                     else
                     {
-                        int num = currentPerm[i];       //save point i in the current permutation
+                        swapNumber = currentPerm[i];       //save point i in the current permutation
                         currentPerm[i] = currentPerm[permSize - 1];
-                        currentPerm[permSize - 1] = num;
+                        currentPerm[permSize - 1] = swapNumber;
                     }
                 }
             }
-
         }
 
         /// <summary>
-        ///  calculateDistance - This method pulls from the distance table accordingly, adds up the distances and 
+        ///  calculateDistance - This method pulls from the distance table accordingly, adds up the distances and
         ///     checks to see if the distance is the shortest. If it is the number and permutation is saved
         /// </summary>
         /// <param name="int[] Permutation"></param>
@@ -206,7 +223,7 @@ namespace Project_1
 
                 for (int i = 0; i < Permutation.Length; i++)
                 {
-                    shortestPerm[i] = Permutation[i];
+                    shortestPerm[i] = Permutation[i];       //go through loop to set values to avoid it getting set to an address
                 }
             }
         }

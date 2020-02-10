@@ -40,8 +40,8 @@ namespace Lab3
             */
             #endregion Array
             #region Hashset
-            //HASTSET
-            int numOfLines = 0; //number of items in file
+            //HASTSET/*
+            /*int numOfLines = 0; //number of items in file
             String line = ""; //holds each line from input file
 
             Stopwatch sw = Stopwatch.StartNew(); //creates sw and starts stopwatch
@@ -68,7 +68,7 @@ namespace Lab3
             //}
 
             Console.WriteLine("Time used to sort: {0} seconds.", sw.Elapsed.TotalMilliseconds / 1000);
-            Console.WriteLine("The total number of strings without duplicates: " + inString.Count);
+            Console.WriteLine("The total number of strings without duplicates: " + inString.Count);*/
             #endregion Hashset
             #region LinkedList
             /*int numOfLines = 0; //number of items in file
@@ -164,27 +164,17 @@ namespace Lab3
             Console.ReadLine();*/
             #endregion Sorted Set
             #region Dictionary
-           /* int size = Convert.ToInt32(Console.ReadLine());
-            Dictionary<int, string> dict = new Dictionary<int, string>();
+            int size = Convert.ToInt32(Console.ReadLine());
+            Dictionary<string, int> dict = new Dictionary<string, int>();
 
             for (int i = 0; i < size; i++)
             {
                 String instring = Console.ReadLine();
-                if (!dict.ContainsValue(instring))
-                {
-                    dict.Add(i, instring);
-                }
-                else
-                {
-                    for(int x = 0; x < size; x++)
-                    {
-                            dict.Remove(x);                 
-                    }
-                }
+                dict.Add(instring, i);
             }
 
             Console.WriteLine("The total number of strings without duplicates: " + dict.Count);
-            Console.ReadLine();*/
+            Console.ReadLine();
             #endregion Dictionary
 
 
