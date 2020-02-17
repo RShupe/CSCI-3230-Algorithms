@@ -45,7 +45,7 @@ namespace HW1
 
         static double findClosestPointsDistance(List<Point> inPoints)
         {
-            inPoints = inPoints.OrderBy(p => p.X).ToList(); //order the points so the compution processes faster
+            //inPoints = inPoints.OrderBy(p => p.X).ToList(); //order the points so the compution processes faster
             double distanceX;                               //record the current distance between X
             double distanceY;                               //recorod the current distance between Y
             double totalDistance;                           //record the current total distance for comparison
