@@ -19,12 +19,13 @@ namespace Project2
 {
     internal class Program
     {
+        private static double[,] distanceTable;             //distance table to generate all the distances between points
         public static void Main(string[] args)
         {
             List<Point> points = new List<Point>();             //a list containing point objects
             Stopwatch sw = new Stopwatch();                     //creates stopwatch
-
-            for (int i = Convert.ToInt32(Console.ReadLine()); i > 0; i--)
+            int num = Convert.ToInt32(Console.ReadLine());
+            for (int i = num; i > 0; i--)
             {
                 String instring = Console.ReadLine();			//create a string to hold the input the user types
 
@@ -34,60 +35,139 @@ namespace Project2
 
                 points.Add(inPoint);           					//add the point object into the points list.
             }
-
+            distanceTable = new double[num, num];
             sw.Start();
-            Console.WriteLine(findClosestPointsDistanceDQ(points));
+            FillDistanceTable(points);
+           Console.WriteLine(closest(points));
             sw.Stop();
 
             Console.WriteLine("Time used: {0} seconds.", sw.Elapsed.TotalMilliseconds / 1000);
             Console.ReadLine();
         }
 
-        public static double findClosestPointsDistanceDQ(List<Point> inPoints)
+        private static double closest(List<Point> inPoints)
         {
-            double shortestDistance = 0.0;
-
-            inPoints = inPoints.OrderBy(p => p.X).ToList(); //order the points so the compution processes faster
-
-            //----------------DIVIDE---------------
-            int middle = inPoints.Count / 2;                //find the middle index of the list
-            List<Point> A = new List<Point>();              //A point list to contain the first half of the points.
-
-            for (int i = 0; i < middle; i++)
+            double[] output = new double[distanceTable.Length-1];
+            int index = 0;
+            for (int i = 0; i < inPoints.Count; i++)
             {
-                A.Add(inPoints.ElementAt(i));
+                for(int j = 0; j < inPoints.Count; j++)
+                {
+                    output[index] = distanceTable[i, j];
+                    if(index < distanceTable.Length - 2)
+                    {
+                        index++;
+                    }
+                    
+                } 
             }
 
-            List<Point> B = new List<Point>();              //B point list to contain the rest of the points
+            output = MergeSort(output);
 
-            for (int i = middle; i < inPoints.Count; i++)
+            double shortest = 0;
+            int ind = 0;
+            while(shortest == 0)
             {
-                B.Add(inPoints.ElementAt(i));
+                if(output[ind] != 0)
+                {
+                    shortest = output[ind];
+                }
+                ind++;
             }
+            return shortest;
 
-            //-------------CONQUER-----------------
-           
-
-            return shortestDistance;
         }
 
-       
-
-        public static double Calculate(Point A, Point B)
+        static double[] MergeSort(double[] C)
         {
-            double distanceX;                               //record the current distance between X
-            double distanceY;                               //record the current distance between Y
-            double totalDistance;                           //record the current total distance for comparison
+            return C.Length == 1 ? C :
 
-            distanceX = (A.X - B.X);
-            distanceX *= distanceX;
-            distanceY = (A.Y - B.Y);
-            distanceY *= distanceY;
+                Merge(MergeSort(C.Take(C.Length / 2).ToArray()),
+                MergeSort(C.Skip(C.Length / 2).ToArray()));
+        }
 
-            totalDistance = distanceX + distanceY;
-            totalDistance = Math.Sqrt(totalDistance);
+        private static double[] Merge(double[] A, double[] B)
+        {
+            double[] outputArray = new double[A.Length + B.Length];
+            int AIndex = 0;
+            int BIndex = 0;
+            int outputIndex = 0;
 
-            return totalDistance;
+            while (AIndex < A.Length && BIndex < B.Length)
+            {
+                if (A[AIndex] < B[BIndex])
+                {
+                    outputArray[outputIndex] = A[AIndex];
+                    outputIndex++;
+                    AIndex++;
+                }
+                else
+                {
+                    outputArray[outputIndex] = B[BIndex];
+                    outputIndex++;
+                    BIndex++;
+                }
+            }
+
+            while (AIndex < A.Length)
+            {
+                outputArray[outputIndex] = A[AIndex];
+                outputIndex++;
+                AIndex++;
+            }
+
+            while (BIndex < B.Length)
+            {
+                outputArray[outputIndex] = B[BIndex];
+                outputIndex++;
+                BIndex++;
+            }
+
+            return outputArray;
+        }
+        /// <summary>
+        /// fillDistanceTable - The method generates a distance table and fills in values from point A to B
+        /// </summary>
+        /// <param name="List<Point> inpoints"></param>
+        ///
+        private static void FillDistanceTable(List<Point> inPoints)
+        {
+            List<Point> AllPoints = new List<Point>();      // List of all points from start thru user input
+
+            int PCount = inPoints.Count;                    // Number of points
+            Point FromPnt;                                  // From Point
+            Point ToPnt;                                    // To Point
+            double distanceX;                               // record the distance between Xs
+            double distanceY;                               // record the distance between Ys
+            double totalDistance;                           // record the total distance
+
+            for (int i = 0; i < PCount; i++)
+            {
+                AllPoints.Add(inPoints[i]);         // Add all user input points to list
+            }
+
+            for (int i = 0; i < PCount; i++)
+            {
+                FromPnt = AllPoints[i];                 // Set From Point for calculation
+                for (int j = i; j < PCount; j++)
+                {
+                    ToPnt = AllPoints[j];               // Set To Point for calculation
+
+                    // d = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+                    distanceX = (ToPnt.X - FromPnt.X);
+                    distanceX *= distanceX;
+                    distanceY = (ToPnt.Y - FromPnt.Y);
+                    distanceY *= distanceY;
+                    totalDistance = distanceX + distanceY;
+                    totalDistance = Math.Sqrt(totalDistance);
+
+                    distanceTable[i, j] = totalDistance;
+                    if (i != j)
+                    {            // saves time from recalc distance between same 2 points
+                        distanceTable[j, i] = totalDistance;
+                    }
+                }
+            }
         }
     }
 }
