@@ -1,0 +1,6 @@
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Recursion Lab\Recursion\bin\Debug\Recursion.exe.config
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Recursion Lab\Recursion\bin\Debug\Recursion.exe
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Recursion Lab\Recursion\bin\Debug\Recursion.pdb
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Recursion Lab\Recursion\obj\Debug\Recursion.csprojAssemblyReference.cache
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Recursion Lab\Recursion\obj\Debug\Recursion.exe
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Recursion Lab\Recursion\obj\Debug\Recursion.pdb
