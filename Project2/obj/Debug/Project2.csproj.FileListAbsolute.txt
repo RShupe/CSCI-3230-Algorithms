@@ -1,6 +1,0 @@
-C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\bin\Debug\Project2.exe.config
-C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\bin\Debug\Project2.exe
-C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\obj\Debug\Project2.exe
-C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\obj\Debug\Project2.pdb
-C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\obj\Debug\Project2.csprojAssemblyReference.cache
-C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\bin\Debug\Project2.pdb
