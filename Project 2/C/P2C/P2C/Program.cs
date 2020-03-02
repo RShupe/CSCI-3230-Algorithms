@@ -8,7 +8,7 @@ using System.Diagnostics;
 //	Description:       This is the project file for Part C, Project 2
 //
 //	Course:            CSCI 3230 - Algorithms
-//	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University
+//	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University.
 //	Created:           Sunday, Feb 29 2020
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
