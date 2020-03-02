@@ -1,34 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 
 namespace P2B
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        /// <summary>
+        /// Main - The method that drives the program.
+        /// </summary>
+        /// <param name="string[] args"></param>
+        ///
+        public static void Main(string[] args)
         {
-            string input = Console.ReadLine();
+            int testCases = Convert.ToInt32(Console.ReadLine());//record the number of test cases
+            double[] outArray = new double[testCases];
 
-            int totalNums = Convert.ToInt32(input);
-
-            int[] x = new int[totalNums];
-
-            int[] y = new int[totalNums];
-
-            for (int i = 0; i < totalNums; i++)     //Get the text file split into the arrays
-
+            for (int i= 0; i < testCases; i++)
             {
-                input = Console.ReadLine();
-
-                string[] values = input.Split(' ');
-
-                Int32.TryParse(values[0], out x[i]);
-
-                Int32.TryParse(values[1], out y[i]);
+                outArray[i] = Cookies();
             }
-            Array.Sort(x, y);
 
-            double ALine = Convert.ToInt64(x[x.Length / 2]);
+            for (int i = 0; i < outArray.Length; i++)
+            {
+                Console.WriteLine(outArray[i]);
+            }
+            Console.ReadLine();
+        }
+
+
+        public static double Cookies()
+        {
+            List<Point> points = new List<Point>();             //a list containing point objects
+            int num = Convert.ToInt32(Console.ReadLine());      //the number of points to store
+            for (int i = num; i > 0; i--)
+            {
+                String instring = Console.ReadLine();			//create a string to hold the input the user types
+
+                string[] values = instring.Split(' ');			//create a string array and split the input into two seperate numbers
+
+                Point inPoint = new Point(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]));	//create a point object to store the two numbers.
+
+                points.Add(inPoint);           					//add the point object into the points list.
+            }
+
+            return CalculateCookies(points);
+        }
+
+        public static double CalculateCookies(List<Point> inPoints)
+        {
+            inPoints = inPoints.OrderByDescending(p => p.X).ToList();
+
+            double ALine = inPoints[ inPoints.Count() / 2].X;
 
             double PlusAline = ALine + 0.5;
 
@@ -38,16 +63,16 @@ namespace P2B
 
             int ANegCookies = 0;
 
-            for (int i = 0; i < totalNums; i++)
+            for (int i = 0; i < inPoints.Count -1; i++)
 
             {
-                if (x[i] > PlusAline)
+                if (inPoints[i].X > PlusAline)
 
                 {
                     APlusCookies++;
                 }
 
-                if (x[i] > NegAline)
+                if (inPoints[i].X > NegAline)
 
                 {
                     ANegCookies++;
@@ -65,6 +90,12 @@ namespace P2B
                 ALine = NegAline;
             }
 
+            return findBCookies(inPoints, ALine, APlusCookies);
+
+        }
+
+        public static double findBCookies(List<Point> inPoints, double ALine, double APlusCookies)
+        {
             double BLine = 0.5;
 
             double tempBLine = 0;
@@ -73,13 +104,15 @@ namespace P2B
 
             int BMax = 0;
 
-            while (BLine < y[y.Count() - 1])
+            inPoints = inPoints.OrderByDescending(p => p.Y).ToList();
+
+            while (BLine < inPoints[inPoints.Count()-1].Y)
 
             {
-                for (int i = 0; i < totalNums; i++)
+                for (int i = 0; i < inPoints.Count-1; i++)
 
                 {
-                    if (y[i] < BLine && x[i] > ALine || y[i] > BLine && x[i] < ALine) //Checking for B's Cookies
+                    if (inPoints[i].Y < BLine && inPoints[i].X > ALine || inPoints[i].Y > BLine && inPoints[i].X < ALine) //Checking for B's Cookies
 
                     {
                         BTempMax++;
@@ -100,12 +133,9 @@ namespace P2B
 
                 BTempMax = 0;
             }
+           
 
-            APlusCookies = totalNums - BMax;
-
-            Console.WriteLine(APlusCookies.ToString());
-
-            Console.ReadLine();
+            return APlusCookies;
         }
     }
 }
