@@ -4,3 +4,9 @@ C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\P2B\P2B\bin\Debug\
 C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\P2B\P2B\obj\Debug\P2B.csprojAssemblyReference.cache
 C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\P2B\P2B\obj\Debug\P2B.exe
 C:\Users\ryant\Documents\Github\CSCI-3230-Algorithms\Project2\P2B\P2B\obj\Debug\P2B.pdb
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\bin\Debug\P2B.exe.config
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\bin\Debug\P2B.exe
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\bin\Debug\P2B.pdb
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\obj\Debug\P2B.csprojAssemblyReference.cache
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\obj\Debug\P2B.exe
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\obj\Debug\P2B.pdb
