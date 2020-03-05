@@ -2,12 +2,29 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	File Name:         Program.cs
+//	Description:       This is the project file for Part B, Project 2
+//
+//	Course:            CSCI 3230 - Algorithms
+//	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University.
+//	Created:           Wednesday, Mar 04 2020
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace P2B
 {
     internal class Program
     {
+        private static int N = 1000050;
+
+        private static int[] on_Y;
+        private static int[] x;
+        private static int[] y;
+        private static int[] t;
+        private static int[] toadd;
+
         /// <summary>
         /// Main - The method that drives the program.
         /// </summary>
@@ -15,127 +32,135 @@ namespace P2B
         ///
         public static void Main(string[] args)
         {
-            int testCases = Convert.ToInt32(Console.ReadLine());//record the number of test cases
-            double[] outArray = new double[testCases];
-
-            for (int i= 0; i < testCases; i++)
+            Stopwatch sw = new Stopwatch();                           //creates stopwatch
+            int testCases = Convert.ToInt32(Console.ReadLine());      //the number of test cases
+            Console.WriteLine();
+            String[] output = new String[testCases];                  //space to hold the results that the number of testcases gives
+            sw.Start();
+            for (int i = 0; i < testCases; i++)
             {
-                outArray[i] = Cookies();
+                output[i] = Calculate();
+            }
+            sw.Stop();
+
+            for (int i = 0; i < output.Length; i++)
+            {
+                Console.WriteLine(output[i]);
             }
 
-            for (int i = 0; i < outArray.Length; i++)
-            {
-                Console.WriteLine(outArray[i]);
-            }
-            Console.ReadLine();
+            //Console.WriteLine("Time used: " + sw.Elapsed.TotalMilliseconds / 1000 + " seconds.");
+            //Console.ReadLine();
         }
 
-
-        public static double Cookies()
+        private static String Calculate()
         {
-            List<Point> points = new List<Point>();             //a list containing point objects
-            int num = Convert.ToInt32(Console.ReadLine());      //the number of points to store
-            for (int i = num; i > 0; i--)
+            ClearandInitialize();
+            List<int>[] ys = new List<int>[N];
+            for(int i = 0; i < ys.Length; i++)
             {
-                String instring = Console.ReadLine();			//create a string to hold the input the user types
+                ys[i] = new List<int>();
+            }
+            List<Point> points = new List<Point>();
+            int numLines = int.Parse(Console.ReadLine());
 
-                string[] values = instring.Split(' ');			//create a string array and split the input into two seperate numbers
+            for (int i = numLines; i > 0; i--)
+            {
+                String instring = Console.ReadLine();           //create a string to hold the input the user types
 
-                Point inPoint = new Point(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]));	//create a point object to store the two numbers.
+                string[] values = instring.Split(' ');          //create a string array and split the input into two seperate numbers
 
-                points.Add(inPoint);           					//add the point object into the points list.
+                Point inPoint = new Point(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]));  //create a point object to store the two numbers.
+
+                points.Add(inPoint);                            //add the point object into the points list.
+
+                x[i] = inPoint.X;
+                y[i] = inPoint.Y;
+
+                ys[x[i]].Add(y[i]);
+                on_Y[y[i]]++;
             }
 
-            return CalculateCookies(points);
+            for (int i = 1001; i >= 0; --i)
+            {
+                on_Y[i] += on_Y[i + 1];
+            }
+
+            build(1, 0, 1001);
+
+            int ans = 0;
+            for (int i = 0; i <= 1001; i++)
+            {
+                ans = Math.Max(ans, t[1]);
+                for (int j = 0; j < ys[i].Count; j++)
+                {
+                    int ps = ys[i][j];
+                    add(1, 0, 1001, 0, ps, -1);
+                    add(1, 0, 1001, ps + 1, 1001, 1);
+                }
+
+                ans = (Math.Max(ans, t[1]));
+            }
+
+            return ans.ToString();
         }
 
-        public static double CalculateCookies(List<Point> inPoints)
+        private static void build(int v, int tl, int tr)
         {
-            inPoints = inPoints.OrderByDescending(p => p.X).ToList();
-
-            double ALine = inPoints[ inPoints.Count() / 2].X;
-
-            double PlusAline = ALine + 0.5;
-
-            double NegAline = ALine - 0.5;
-
-            int APlusCookies = 0;
-
-            int ANegCookies = 0;
-
-            for (int i = 0; i < inPoints.Count -1; i++)
-
+            toadd[v] = 0;
+            if (tl == tr)
             {
-                if (inPoints[i].X > PlusAline)
-
-                {
-                    APlusCookies++;
-                }
-
-                if (inPoints[i].X > NegAline)
-
-                {
-                    ANegCookies++;
-                }
+                t[v] = on_Y[tl];
+                return;
             }
-
-            if (APlusCookies > ANegCookies)
-
-            {
-                ALine = PlusAline;
-            }
-            else
-
-            {
-                ALine = NegAline;
-            }
-
-            return findBCookies(inPoints, ALine, APlusCookies);
-
+            int tm = tl + tr;
+            tm /= 2;
+            build(v * 2, tl, tm);
+            build(v * 2 + 1, tm + 1, tr);
+            t[v] = Math.Min(t[v * 2], t[v * 2 + 1]);
         }
 
-        public static double findBCookies(List<Point> inPoints, double ALine, double APlusCookies)
+        private static void push(int v, int tl, int tr)
         {
-            double BLine = 0.5;
-
-            double tempBLine = 0;
-
-            int BTempMax = 0;
-
-            int BMax = 0;
-
-            inPoints = inPoints.OrderByDescending(p => p.Y).ToList();
-
-            while (BLine < inPoints[inPoints.Count()-1].Y)
-
+            if (toadd[v] == 0)
             {
-                for (int i = 0; i < inPoints.Count-1; i++)
-
-                {
-                    if (inPoints[i].Y < BLine && inPoints[i].X > ALine || inPoints[i].Y > BLine && inPoints[i].X < ALine) //Checking for B's Cookies
-
-                    {
-                        BTempMax++;
-                    }
-                }
-
-                if (BTempMax > BMax)
-
-                {
-                    BMax = BTempMax;
-
-                    tempBLine = BLine;
-                }
-
-                BLine++;
-
-                BLine++;
-
-                BTempMax = 0;
+                return;
             }
-           
+            toadd[v * 2] += toadd[v];
+            toadd[v * 2 + 1] += toadd[v];
+            t[v * 2] += toadd[v];
+            t[v * 2 + 1] += toadd[v];
+            toadd[v] = 0;
+        }
 
-            return APlusCookies;
+        private static void add(int v, int tl, int tr, int l, int r, int val)
+        {
+            if (l > r)
+            {
+                return;
+            }
+
+            if (tl == l && tr == r)
+            {
+                t[v] += val;
+                toadd[v] += val;
+                return;
+            }
+
+            push(v, tl, tr);
+            int tm = tl + tr;
+            tm /= 2;
+            add(v * 2, tl, tm, l, Math.Min(r, tm), val);
+            add(v * 2 + 1, tm + 1, tr, Math.Max(tm + 1, l), r, val);
+            t[v] = Math.Min(t[v * 2], t[v * 2 + 1]);
+        }
+
+        public static void ClearandInitialize()
+        {
+            x = new int[N];
+            y = new int[N];
+            t = new int[N * 4];
+            toadd = new int[N * 4];
+            on_Y = new int[N];
         }
     }
 }

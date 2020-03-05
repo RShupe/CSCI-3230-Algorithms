@@ -126,7 +126,7 @@ namespace Project2
             //AT MOST THIS LOOP WILL EXECUTE 6 TIMES
             for (int i = 0; i < inPoints.Count; i++)
             {
-                for (int j = i + 1; j < inPoints.Count && (inPoints[j].Y - inPoints[j].Y) < stripPointsDistance; j++)
+                for (int j = i + 1; j < inPoints.Count && (inPoints[j].Y - inPoints[i].Y) < stripPointsDistance; j++)
                 {
                     double temp = Distance(inPoints[i], inPoints[j]); //holds the calculated distance that the distance method returns
                     if (temp < stripPointsDistance)

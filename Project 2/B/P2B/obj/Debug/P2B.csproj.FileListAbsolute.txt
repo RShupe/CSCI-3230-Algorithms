@@ -10,3 +10,5 @@ C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\bin\Debug\P
 C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\obj\Debug\P2B.csprojAssemblyReference.cache
 C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\obj\Debug\P2B.exe
 C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\obj\Debug\P2B.pdb
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\bin\Debug\WindowsBase.dll
+C:\Users\ryant\Documents\GitHub\CSCI-3230-Algorithms\Project 2\B\P2B\obj\Debug\P2B.csproj.CopyComplete
