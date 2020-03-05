@@ -17,9 +17,9 @@ namespace P2B
 {
     internal class Program
     {
-        private static int[] on_Y;
-        private static int[] t;
-        private static int[] toadd;
+        private static int[] onY;
+        private static int[] SegTree;
+        private static int[] toAdd;
 
         /// <summary>
         /// Main - The method that drives the program.
@@ -31,13 +31,13 @@ namespace P2B
             Stopwatch sw = new Stopwatch();                           //creates stopwatch
             int testCases = Convert.ToInt32(Console.ReadLine());      //the number of test cases
             Console.WriteLine();
-            String[] output = new String[testCases];                  //space to hold the results that the number of testcases gives
-            sw.Start();
+            String[] output = new String[testCases];                  //space to hold the results that the number of testcases give
+            sw.Start();						      //start the stopwatch
             for (int i = 0; i < testCases; i++)
             {
                 output[i] = Calculate();
             }
-            sw.Stop();
+            sw.Stop();						      //stop the stopwatch
 
             for (int i = 0; i < output.Length; i++)
             {
@@ -48,112 +48,135 @@ namespace P2B
             Console.ReadLine();
         }
 
+
+        /// <summary>
+        /// Calculate - This method calculates the answer and returns the int string of the number of cookies.
+        /// </summary>
+        /// <return name="output"></param>
+        ///
         private static String Calculate()
         {
-            int N = 1000000;
-            ClearandInitialize(N);
+            int N = 1000000;		//max possible number of cookies
+            SegTree = new int[N * 4];
+            toAdd = new int[N * 4];
+            onY = new int[N];
             int output = 0;
-            List<int>[] ys = new List<int>[N];
-            for (int i = 0; i < ys.Length; i++)
+            List<int>[] Ys = new List<int>[N];
+            for (int i = 0; i < Ys.Length; i++)
             {
-                ys[i] = new List<int>();
+                Ys[i] = new List<int>();                        //build list of lists of Y coords
             }
 
-            int numLines = int.Parse(Console.ReadLine());
+            int numLines = int.Parse(Console.ReadLine());       //get number of X,Y coord points input by user
 
             for (int i = numLines; i > 0; i--)
             {
-                String instring = Console.ReadLine();           //create a string to hold the input the user types
+                String instring = Console.ReadLine();           //create a string to hold the user input
 
                 string[] values = instring.Split(' ');          //create a string array and split the input into two seperate numbers
 
-                Point inPoint = new Point(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]));  //create a point object to store the two numbers.
+                Point inPoint = new Point(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]));  //create a point object to store the two coords
 
-                ys[inPoint.X].Add(inPoint.Y);
-                on_Y[inPoint.Y]++;
+                Ys[inPoint.X].Add(inPoint.Y);                   //list of Y points for each X
+                onY[inPoint.Y]++;                               //number of Y points on vertical line
             }
 
             for (int i = 1001; i >= 0; i--)
             {
-                on_Y[i] += on_Y[i + 1];
+                onY[i] += onY[i + 1];                             //get total number of Y points into onY[0]
             }
 
-            Build(1, 0, 1001);
+            BuildSegTree(1, 0, 1001);
 
 
             for (int i = 0; i <= 1001; i++)
             {
-                output = Math.Max(output, t[1]);
-                for (int j = 0; j < ys[i].Count; j++)
+                output = Math.Max(output, SegTree[1]);
+                for (int j = 0; j < Ys[i].Count; j++)
                 {
-                    int ps = ys[i][j];
+                    int ps = Ys[i][j];
                     Add(1, 0, 1001, 0, ps, -1);
                     Add(1, 0, 1001, ps + 1, 1001, 1);
                 }
 
-                output = (Math.Max(output, t[1]));
+                output = (Math.Max(output, SegTree[1]));
             }
 
             return output.ToString();
         }
 
-        private static void Build(int v, int tl, int tr)
+        /// <summary>
+        /// BuildSegTree -  this method...
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="treeLeft"></param>
+        /// <param name="treeRight"></param>
+        ///
+        private static void BuildSegTree(int index, int treeLeft, int treeRight)
         {
-            toadd[v] = 0;
-            if (tl == tr)
+            toAdd[index] = 0;
+            if (treeLeft == treeRight)
             {
-                t[v] = on_Y[tl];
+                SegTree[index] = onY[treeLeft];
                 return;
             }
 
-            int tm = tl + tr;
-            tm /= 2;
-            Build(v * 2, tl, tm);
-            Build(v * 2 + 1, tm + 1, tr);
-            t[v] = Math.Min(t[v * 2], t[v * 2 + 1]);
+            int TreeMid = treeLeft + treeRight;                       //find the middle of the tree to consider
+            TreeMid /= 2;
+            BuildSegTree(index * 2, treeLeft, TreeMid);                   //analyze the left half of the tree
+            BuildSegTree(index * 2 + 1, TreeMid + 1, treeRight);               //analyze the right half of the tree
+            SegTree[index] = Math.Min(SegTree[index * 2], SegTree[index * 2 + 1]);   //find minimum of ..
         }
 
-        private static void Push(int v)
+
+        /// <summary>
+        /// Push -  this method...
+        /// </summary>
+        /// <param name="vl"></param>
+        ///
+        private static void Push(int vl)
         {
-            if (toadd[v] == 0)
+            if (toAdd[vl] == 0)
             {
                 return;
             }
 
-            toadd[v * 2] += toadd[v];
-            toadd[v * 2 + 1] += toadd[v];
-            t[v * 2] += toadd[v];
-            t[v * 2 + 1] += toadd[v];
-            toadd[v] = 0;
+            toAdd[vl * 2] += toAdd[vl];
+            toAdd[vl * 2 + 1] += toAdd[vl];
+            SegTree[vl * 2] += toAdd[vl];
+            SegTree[vl * 2 + 1] += toAdd[vl];
+            toAdd[vl] = 0;
         }
-
-        private static void Add(int v, int tl, int tr, int l, int r, int val)
+        /// <summary>
+        /// Add -  this method...
+        /// </summary>
+        /// <param name="vl"></param>
+        /// <param name="treeLeft"></param>
+        /// <param name="treeRight"></param>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <param name="vlv"></param>
+        ///
+        private static void Add(int vl, int treeLeft, int treeRight, int left, int right, int vlv)
         {
-            if (l > r)
+            if (left > right)                            //make sure there are vertical lines left to analyze
             {
                 return;
             }
 
-            if (tl == l && tr == r)
+            if (treeLeft == left && treeRight == right)
             {
-                t[v] += val;
-                toadd[v] += val;
+                SegTree[vl] += vlv;
+                toAdd[vl] += vlv;
                 return;
             }
 
-            Push(v);
-            int tm = tl + tr;
-            tm /= 2;
-            Add(v * 2, tl, tm, l, Math.Min(r, tm), val);
-            Add(v * 2 + 1, tm + 1, tr, Math.Max(tm + 1, l), r, val);
-            t[v] = Math.Min(t[v * 2], t[v * 2 + 1]);
-        }
-
-        public static void ClearandInitialize(int N)
-        {
-            t = new int[N * 4];
-            toadd = new int[N * 4];
-            on_Y = new int[N];
+            Push(vl);
+            int treeMid = treeLeft + treeRight;
+            treeMid /= 2;
+            Add(vl * 2, treeLeft, treeMid, left, Math.Min(right, treeMid), vlv);
+            Add(vl * 2 + 1, treeMid + 1, treeRight, Math.Max(treeMid + 1, left), right, vlv);
+            SegTree[vl] = Math.Min(SegTree[vl * 2], SegTree[vl * 2 + 1]);
         }
     }
 }
