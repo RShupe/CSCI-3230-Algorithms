@@ -88,27 +88,35 @@ namespace P2C
         public static int numberOfTimes(int sum, int[,] firstHalf, int[,] secondHalf, int numLines)
         {
             int numTimesFound = 0;      //record the number of times found that the sum is correct
-
+            int currentNumber;          // the current number of times this number has been found
             List<int> firstHalfVals = new List<int>(addArray(firstHalf, numLines)); //hold the possible numbers for the first 2 cols
             List<int> secondHalfVals = new List<int>(addArray(secondHalf, numLines));//hold the possible numbers for the last 2 cols
             firstHalfVals.Sort();
             secondHalfVals.Sort();
 
-            int firstHalfCount = firstHalfVals.Count;       //store the count value so that it doesnt get called as much
-            int secondHalfCount = secondHalfVals.Count;     //store the count value so that it doesnt get called as much
+            Dictionary<int, int> firstHalfDictionary = new Dictionary<int, int>(); //half to use dictionary because lookup time is faster than calculating. use this to count the number of occurances of a number
 
-            Dictionary<int, int> checkForSum = new Dictionary<int, int>(); //dictionary for fast access and lookup to eliminate the n^2 way of looking for the target
-
-            for (int i = 0; i < firstHalfCount; i++)
+            for (int i = 0; i < firstHalfVals.Count; i++)
             {
-                checkForSum[firstHalfVals[i]] = 0;
+                if (firstHalfDictionary.ContainsKey(firstHalfVals[i]))
+                {
+                    currentNumber = firstHalfDictionary[firstHalfVals[i]] + 1; //get the current number of occurances and store into a
+                    firstHalfDictionary.Remove(firstHalfVals[i]); //remove the current number inside of the index,
+                    firstHalfDictionary.Add(firstHalfVals[i], currentNumber); //add new current number of occurances
+                }
+                else
+                {
+                    firstHalfDictionary.Add(firstHalfVals[i], 1); //if the number has not been found before, store a 1
+                }
             }
 
-            for (int j = 0; j < secondHalfCount; j++)
+            for (int i = 0; i < secondHalfVals.Count; i++)
             {
-                if (checkForSum.ContainsKey(sum - secondHalfVals[j]))
+                int currentKey = sum - secondHalfVals[i]; //subtract the number currently in second half from the sum and it should equal a number in the first half
+
+                if (firstHalfDictionary.ContainsKey(currentKey))
                 {
-                    numTimesFound += 1;
+                    numTimesFound += firstHalfDictionary[currentKey]; //add the number of occurances to the number of times found variable
                 }
             }
 
