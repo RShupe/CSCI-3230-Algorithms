@@ -15,7 +15,7 @@ namespace LCS
 
             Console.WriteLine("Enter the second string:");
             string2 = Console.ReadLine();
-
+            Console.WriteLine();
             Console.WriteLine("The LCS String is: " + LCS(string1, string2));
 
             Console.ReadLine();
