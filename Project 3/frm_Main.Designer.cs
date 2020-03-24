@@ -35,8 +35,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.outputBox = new System.Windows.Forms.ListBox();
             this.label_file = new System.Windows.Forms.Label();
+            this.loadingLabel = new System.Windows.Forms.Label();
+            this.outputBox = new System.Windows.Forms.ListBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_Upload
@@ -112,17 +114,6 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "East Tennessee State University";
             // 
-            // outputBox
-            // 
-            this.outputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.outputBox.FormattingEnabled = true;
-            this.outputBox.Location = new System.Drawing.Point(12, 58);
-            this.outputBox.Name = "outputBox";
-            this.outputBox.Size = new System.Drawing.Size(764, 277);
-            this.outputBox.TabIndex = 7;
-            // 
             // label_file
             // 
             this.label_file.AutoSize = true;
@@ -132,12 +123,44 @@
             this.label_file.TabIndex = 8;
             this.label_file.Text = "No file loaded!";
             // 
+            // loadingLabel
+            // 
+            this.loadingLabel.AutoSize = true;
+            this.loadingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadingLabel.Location = new System.Drawing.Point(244, 335);
+            this.loadingLabel.Name = "loadingLabel";
+            this.loadingLabel.Size = new System.Drawing.Size(0, 33);
+            this.loadingLabel.TabIndex = 9;
+            // 
+            // outputBox
+            // 
+            this.outputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputBox.FormattingEnabled = true;
+            this.outputBox.Location = new System.Drawing.Point(15, 55);
+            this.outputBox.Name = "outputBox";
+            this.outputBox.Size = new System.Drawing.Size(764, 277);
+            this.outputBox.TabIndex = 10;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(12, 344);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 11;
+            this.btnClear.Text = "Clear Box";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // frm_Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(791, 347);
-            this.Controls.Add(this.label_file);
+            this.ClientSize = new System.Drawing.Size(791, 377);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.outputBox);
+            this.Controls.Add(this.loadingLabel);
+            this.Controls.Add(this.label_file);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -147,7 +170,9 @@
             this.Controls.Add(this.btn_Upload);
             this.MinimumSize = new System.Drawing.Size(700, 386);
             this.Name = "frm_Main";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Algorithms - Project 3";
+            this.Load += new System.EventHandler(this.frm_Main_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,8 +187,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ListBox outputBox;
         private System.Windows.Forms.Label label_file;
+        private System.Windows.Forms.Label loadingLabel;
+        private System.Windows.Forms.ListBox outputBox;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 
