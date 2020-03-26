@@ -173,7 +173,6 @@
             this.Name = "frm_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Algorithms - Project 3";
-            this.Load += new System.EventHandler(this.frm_Main_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

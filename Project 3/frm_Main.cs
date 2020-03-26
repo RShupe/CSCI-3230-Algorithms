@@ -1324,10 +1324,6 @@ namespace Project_3
         {
         }
 
-        private void frm_Main_Load(object sender, EventArgs e)
-        {
-        }
-
         private void btnClear_Click(object sender, EventArgs e)
         {
             outputBox.Items.Clear();
