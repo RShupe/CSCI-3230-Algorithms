@@ -424,7 +424,7 @@ namespace Project_3
                     else if (currentEntry[0] == "rs1799971")
                     {
                         output += "RS1799971\t\t";
-                        output += "Description: alcohol cravings\t\t";
+                        output += "Description:  alcohol cravings\t\t";
 
                         if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
                         {
@@ -622,7 +622,6 @@ namespace Project_3
                     #endregion Popular Items
 
                 }
-               
             }
             else
             {
@@ -630,15 +629,697 @@ namespace Project_3
                 outputBox.Items.Add("No file loaded!");
             }
 
-
             loadingLabel.Text = "";
             loadingLabel.Refresh();
         }
 
         private void btn_Detox_Click(object sender, EventArgs e)
         {
-        }
+            loadingLabel.Text = "Report is generating...";
+            loadingLabel.Refresh();
 
+
+            outputBox.Items.Clear();
+            outputBox.Refresh();
+
+            if (fileIn)
+            {
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    String output = ""; //build a string to put in the list
+                    String[] currentEntry = new String[5]; //get the current line from the file and format it into a readable string array
+
+                    currentEntry = entries[i];
+
+                    #region Detox Items
+                    if(currentEntry[0] == "rs1048943")
+                    {
+                        output += "CYP1A1*2C A4889G\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        output += "-/-";
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1800440")
+                    {
+                        output += "CYP1B1 N453S\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs6413419")
+                    {
+                        output += "CYP2E1*4 4768G>A\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if((currentEntry[3]  == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs4986910")
+                    {
+                        output += "CYP3A4*3 M445T\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1695")
+                    {
+                        output += "GSTP1 I105V\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs4880")
+                    {
+                        output += "SOD2 A16V\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1805158")
+                    {
+                        output += "NAT1 R64W\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1801280")
+                    {
+                        output += "NAT2 I114T\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1799930")
+                    {
+                        output += "NAT2 R197Q\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1799931")
+                    {
+                        output += "NAT2 G286E\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1801279")
+                    {
+                        output += "NAT2 R64Q\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs4986883")
+                    {
+                        output += "CYP1A1 m3 T3205C\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1799814")
+                    {
+                        output += "CYP1A1 C2453A\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs762551")
+                    {
+                        output += "CYP1A2 164A>C\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1056836")
+                    {
+                        output += "CYP1B1 L432V\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs10012")
+                    {
+                        output += "CYP1B1 R48G\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1801272")
+                    {
+                        output += "CYP2A6*2 1799T>A\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs568811809")
+                    {
+                        output += "CYP2A6*20\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1799853")
+                    {
+                        output += "CYP2C9*2 C430T\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1057910")
+                    {
+                        output += "CYP2C9*3 A1075C\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs12248560")
+                    {
+                        output += "CYP2C19*17\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1135840")
+                    {
+                        output += "CYP2D6 S486T\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1135840")
+                    {
+                        output += "CYP2D6 S486T\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1065852")
+                    {
+                        output += "CYP2D6 100C>T\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs16947")
+                    {
+                        output += "CYP2D6 2850C>T\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs2070676")
+                    {
+                        output += "CYP2E1*1B 9896C>G\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs55897648")
+                    {
+                        output += "CYP2E1*1B 10023G>A\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs2740574")
+                    {
+                        output += "CYP3A4*1B\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs55785340")
+                    {
+                        output += "CYP3A4*2 S222P\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs12721627")
+                    {
+                        output += "CYP3A4*16 T185S\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1138272")
+                    {
+                        output += "GSTP1 A114V\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs4986782")
+                    {
+                        output += "NAT1 R187Q\t\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1208")
+                    {
+                        output += "NAT2 K268R\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+
+
+
+                    #endregion Detox Items
+                }
+            }
+            else
+            {
+                outputBox.Items.Clear();
+                outputBox.Items.Add("No file loaded!");
+            }
+
+            loadingLabel.Text = "";
+            loadingLabel.Refresh();
+        }
         private void btn_Methylation_Click(object sender, EventArgs e)
         {
         }
