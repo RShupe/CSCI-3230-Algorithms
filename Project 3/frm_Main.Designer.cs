@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Main));
             this.btn_Upload = new System.Windows.Forms.Button();
             this.btn_Popular = new System.Windows.Forms.Button();
             this.btn_Methylation = new System.Windows.Forms.Button();
@@ -49,7 +50,7 @@
             this.btn_Upload.TabIndex = 0;
             this.btn_Upload.Text = "Upload File";
             this.btn_Upload.UseVisualStyleBackColor = true;
-            this.btn_Upload.Click += new System.EventHandler(this.btn_Upload_Click);
+            this.btn_Upload.Click += new System.EventHandler(this.Btn_Upload_Click);
             // 
             // btn_Popular
             // 
@@ -59,18 +60,18 @@
             this.btn_Popular.TabIndex = 1;
             this.btn_Popular.Text = "Result from Popular Snpedia Items";
             this.btn_Popular.UseVisualStyleBackColor = true;
-            this.btn_Popular.Click += new System.EventHandler(this.btn_Popular_Click);
+            this.btn_Popular.Click += new System.EventHandler(this.Btn_Popular_Click);
             // 
             // btn_Methylation
             // 
             this.btn_Methylation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Methylation.Location = new System.Drawing.Point(486, 16);
+            this.btn_Methylation.Location = new System.Drawing.Point(483, 16);
             this.btn_Methylation.Name = "btn_Methylation";
             this.btn_Methylation.Size = new System.Drawing.Size(123, 35);
             this.btn_Methylation.TabIndex = 2;
             this.btn_Methylation.Text = "Generate Methylation Analysis";
             this.btn_Methylation.UseVisualStyleBackColor = true;
-            this.btn_Methylation.Click += new System.EventHandler(this.btn_Methylation_Click);
+            this.btn_Methylation.Click += new System.EventHandler(this.Btn_Methylation_Click);
             // 
             // btn_Detox
             // 
@@ -78,17 +79,17 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Detox.Location = new System.Drawing.Point(250, 14);
             this.btn_Detox.Name = "btn_Detox";
-            this.btn_Detox.Size = new System.Drawing.Size(230, 37);
+            this.btn_Detox.Size = new System.Drawing.Size(227, 37);
             this.btn_Detox.TabIndex = 3;
             this.btn_Detox.Text = "Generate Detox Profile";
             this.btn_Detox.UseVisualStyleBackColor = true;
-            this.btn_Detox.Click += new System.EventHandler(this.btn_Detox_Click);
+            this.btn_Detox.Click += new System.EventHandler(this.Btn_Detox_Click);
             // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(615, 12);
+            this.label1.Location = new System.Drawing.Point(612, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 4;
@@ -98,7 +99,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(615, 25);
+            this.label2.Location = new System.Drawing.Point(612, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 5;
@@ -108,7 +109,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(615, 38);
+            this.label3.Location = new System.Drawing.Point(612, 38);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(161, 13);
             this.label3.TabIndex = 6;
@@ -140,24 +141,24 @@
             this.outputBox.FormattingEnabled = true;
             this.outputBox.Location = new System.Drawing.Point(15, 55);
             this.outputBox.Name = "outputBox";
-            this.outputBox.Size = new System.Drawing.Size(764, 277);
+            this.outputBox.Size = new System.Drawing.Size(761, 264);
             this.outputBox.TabIndex = 10;
             // 
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnClear.Location = new System.Drawing.Point(12, 344);
+            this.btnClear.Location = new System.Drawing.Point(12, 343);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
             this.btnClear.Text = "Clear Box";
             this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
             // frm_Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(791, 377);
+            this.ClientSize = new System.Drawing.Size(788, 376);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.outputBox);
             this.Controls.Add(this.loadingLabel);
@@ -169,6 +170,7 @@
             this.Controls.Add(this.btn_Methylation);
             this.Controls.Add(this.btn_Popular);
             this.Controls.Add(this.btn_Upload);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(700, 386);
             this.Name = "frm_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

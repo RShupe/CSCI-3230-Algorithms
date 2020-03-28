@@ -1,53 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	File Name:         frm_Main.cs
+//	Description:       This is the main part of the program is executed, also the main form window
+//
+//	Course:            CSCI 3230 - Algorithms
+//	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University.
+//	Created:           Wednesday, Mar 25 2020
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace Project_3
 {
     public partial class frm_Main : Form
     {
         private List<String[]> entries = new List<String[]>(); //variable to hold the rsid's that is found in the file
-        private static bool fileIn = false;
+        private static bool fileIn = false; //bool to check if the user has a file loaded into the system or not
 
-
+        /// <summary>
+        /// frm_Main - This initializes the main window
+        /// </summary>
+        ///
         public frm_Main()
         {
-            InitializeComponent();
-
+            InitializeComponent(); //initialize the main window
         }
 
-        private void btn_Upload_Click(object sender, EventArgs e)
+        /// <summary>
+        /// btn_Upload_Click - this executes when the user clicks the upload button, takes a user submitted file and prepares it to generate the reports.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        ///
+        private void Btn_Upload_Click(object sender, EventArgs e)
         {
-            StreamReader rdr = null;
-            OpenFileDialog OpenDlg = new OpenFileDialog();
-
-            OpenDlg.Filter = "text files|*.txt;*.text";
-            OpenDlg.InitialDirectory = Application.StartupPath;
-            OpenDlg.Title = "Select a text file to insert into the list";
+            StreamReader rdr = null;    //initialize a new stream reader to read from the file
+            OpenFileDialog OpenDlg = new OpenFileDialog
+            {
+                Filter = "text files|*.txt;*.text",
+                InitialDirectory = Application.StartupPath,  //format the open dialog to only open text files.
+                Title = "Select a text file to insert into the list"
+            }; //display the dialog box for the user to open the file.
 
             if (DialogResult.Cancel != OpenDlg.ShowDialog())
             {
                 try
                 {
                     entries.Clear();
-                    outputBox.Items.Clear();
+                    outputBox.Items.Clear(); //clear and refresh the output box for the new data
                     outputBox.Refresh();
 
                     rdr = new StreamReader(OpenDlg.FileName);
 
                     for (int i = 0; i < 17; i++)
                     {
-                        rdr.ReadLine();
+                        rdr.ReadLine(); //skip the comment lines in the dna file
                     }
-
+                    String sep = "\t"; //delimiter
+                    String[] ent = new String[5]; //current line
                     while (!rdr.EndOfStream)
                     {
-                        String sep = "\t";
-                        String[] ent = new String[5];
-
-                        ent = rdr.ReadLine().Split(sep.ToCharArray());
+                        ent = rdr.ReadLine().Split(sep.ToCharArray()); //read the current line and add into the entries array.
                         entries.Add(ent);
                     }
                 }
@@ -56,33 +72,38 @@ namespace Project_3
                     if (rdr != null)
                     {
                         rdr.Close();
-                        fileIn = true;
+                        fileIn = true; //if the end of the file is met, then close out the file and make file in to true to tell the user that the file was successfully loaded into the system
                         label_file.Text = "File is Loaded!";
                     }
                 }
-
-                string fileName = OpenDlg.FileName;
             }
         }
 
-        private void btn_Popular_Click(object sender, EventArgs e)
+        /// <summary>
+        /// btn_Popular_Click - this executes when the user clicks the popular items list, then generates
+        /// a report based on the popular items on SNPedia.com
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        ///
+        private void Btn_Popular_Click(object sender, EventArgs e)
         {
-            loadingLabel.Text = "Report is generating...";
+            loadingLabel.Text = "Report is generating..."; //tell the user that the report is generating (they wont really be able to see this unless their pc is slow)
             loadingLabel.Refresh();
-
 
             outputBox.Items.Clear();
             outputBox.Refresh();
 
             if (fileIn)
             {
+                String[] currentEntry = new String[5]; //get the current line from the file and format it into a readable string array
                 for (int i = 0; i < entries.Count; i++)
                 {
                     String output = ""; //build a string to put in the list
-                    String[] currentEntry = new String[5]; //get the current line from the file and format it into a readable string array
 
-                    currentEntry = entries[i];
+                    currentEntry = entries[i];  //current entry is formatted in the correct way to compare
 
+                    //compare the file to these rs values then generate and add the item to the output box
                     #region Popular Items
 
                     //this is where all of the popular items are kept (it works its just really slow)
@@ -620,39 +641,45 @@ namespace Project_3
                     }
 
                     #endregion Popular Items
-
                 }
             }
             else
             {
                 outputBox.Items.Clear();
-                outputBox.Items.Add("No file loaded!");
+                outputBox.Items.Add("No file loaded!"); //if no file is loaded into the system, tell the user
             }
 
             loadingLabel.Text = "";
-            loadingLabel.Refresh();
+            loadingLabel.Refresh(); //when the report is done generating, clear the label
         }
 
-        private void btn_Detox_Click(object sender, EventArgs e)
+        /// <summary>
+        /// btn_Detox_Click - this executes when the user clicks the detox button and then a detox report is generated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        ///
+        private void Btn_Detox_Click(object sender, EventArgs e)
         {
-            loadingLabel.Text = "Report is generating...";
+            loadingLabel.Text = "Report is generating..."; //tell the user that the report is generating (they wont really be able to see this unless their pc is slow)
             loadingLabel.Refresh();
-
 
             outputBox.Items.Clear();
             outputBox.Refresh();
 
             if (fileIn)
             {
+                String[] currentEntry = new String[5]; //get the current line from the file and format it into a readable string array
                 for (int i = 0; i < entries.Count; i++)
                 {
                     String output = ""; //build a string to put in the list
-                    String[] currentEntry = new String[5]; //get the current line from the file and format it into a readable string array
 
-                    currentEntry = entries[i];
+                    currentEntry = entries[i];  //current entry is formatted in the correct way to compare
 
+                    //compare the file to these rs values then generate and add the item to the output box
                     #region Detox Items
-                    if(currentEntry[0] == "rs1048943")
+
+                    if (currentEntry[0] == "rs1048943")
                     {
                         output += "CYP1A1*2C A4889G\t";
                         output += currentEntry[0] + "\t";
@@ -691,7 +718,7 @@ namespace Project_3
                         {
                             output += "+/+";
                         }
-                        else if((currentEntry[3]  == "A") && (currentEntry[4] == "G"))
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
                         {
                             output += "+/-";
                         }
@@ -1306,29 +1333,641 @@ namespace Project_3
                         continue;
                     }
 
-
-
                     #endregion Detox Items
                 }
             }
             else
             {
                 outputBox.Items.Clear();
-                outputBox.Items.Add("No file loaded!");
+                outputBox.Items.Add("No file loaded!"); //if no file is loaded into the system, tell the user
             }
 
             loadingLabel.Text = "";
-            loadingLabel.Refresh();
-        }
-        private void btn_Methylation_Click(object sender, EventArgs e)
-        {
+            loadingLabel.Refresh(); //when the report is done generating, clear the label
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+        /// <summary>
+        /// btn_Methylation_Click - this executes when the user clicks the Methylation button and then a Methylation report is generated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        ///
+        private void Btn_Methylation_Click(object sender, EventArgs e)
         {
+            loadingLabel.Text = "Report is generating..."; //tell the user that the report is generating (they wont really be able to see this unless their pc is slow)
+            loadingLabel.Refresh();
+
             outputBox.Items.Clear();
             outputBox.Refresh();
+
+            if (fileIn)
+            {
+                String[] currentEntry = new String[5]; //get the current line from the file and format it into a readable string array
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    String output = ""; //build a string to put in the list
+
+                    currentEntry = entries[i];  //current entry is formatted in the correct way to compare
+
+                    //compare the file to these rs values then generate and add the item to the output box
+                    #region Methylation Items
+
+                    if (currentEntry[0] == "rs4680")
+                    {
+                        output += "COMT V158M\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs4633")
+                    {
+                        output += "COMT H62H\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs769224")
+                    {
+                        output += "COMT P199P\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1544410")
+                    {
+                        output += "VDR Bsm\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs731236")
+                    {
+                        output += "VDR Taq\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs6323")
+                    {
+                        output += "MAO-A R297R\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "C"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs3741049")
+                    {
+                        output += "ACAT1-02\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1801133")
+                    {
+                        output += "MTHFR C677T\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs2066470")
+                    {
+                        output += "MTHFR 03 P39P\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1801131")
+                    {
+                        output += "MTHFR A1298C\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1805087")
+                    {
+                        output += "MTR A2756G\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1801394")
+                    {
+                        output += "MTRR A66G\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs10380")
+                    {
+                        output += "MTRR H595Y\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs162036")
+                    {
+                        output += "MTRR K350A\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs2287780")
+                    {
+                        output += "MTRR R415T\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1802059")
+                    {
+                        output += "MTRR A664A\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs234706")
+                    {
+                        output += "CBS C699T\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs2298758")
+                    {
+                        output += "CBS N212N\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs567754")
+                    {
+                        output += "BHMT-02\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs617219")
+                    {
+                        output += "BHMT-04\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs651852")
+                    {
+                        output += "BHMT-08\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs819147")
+                    {
+                        output += "AHCY-01\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs819134")
+                    {
+                        output += "AHCY-02\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs819171")
+                    {
+                        output += "AHCY-19\t\t";
+                        output += currentEntry[0] + "\t\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1801181")
+                    {
+                        output += "CBS A360A\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "C") && (currentEntry[4] == "C"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "C") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "T") && (currentEntry[4] == "T"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+                    else if (currentEntry[0] == "rs1979277")
+                    {
+                        output += "SHMT1 C1420T\t";
+                        output += currentEntry[0] + "\t";
+                        output += currentEntry[3] + currentEntry[4] + "\t";
+
+                        if ((currentEntry[3] == "G") && (currentEntry[4] == "G"))
+                        {
+                            output += "-/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "G"))
+                        {
+                            output += "+/-";
+                        }
+                        else if ((currentEntry[3] == "A") && (currentEntry[4] == "A"))
+                        {
+                            output += "+/+";
+                        }
+
+                        outputBox.Items.Add(output);
+                        continue;
+                    }
+
+                    #endregion Methylation Items
+                }
+            }
+            else
+            {
+                outputBox.Items.Clear();
+                outputBox.Items.Add("No file loaded!"); //if no file is loaded into the system, tell the user
+            }
+
+            loadingLabel.Text = "";
+            loadingLabel.Refresh(); //when the report is done generating, clear the label
+        }
+
+        /// <summary>
+        /// btnClear_Click - this clears the text box just incase the user wants to clear out the data for whatever reason
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        ///
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            outputBox.Items.Clear();
+            outputBox.Refresh(); //clear and refrresh the output box
         }
     }
-    
 }
