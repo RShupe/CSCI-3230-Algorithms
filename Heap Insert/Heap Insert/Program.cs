@@ -17,10 +17,10 @@ namespace Heap_Insert
             for (int i = 0; i < strings; i++)
             {
                 heap.Insert(Console.ReadLine());
-                Console.WriteLine(heap.print());
             }
 
-            //Console.WriteLine(heap.print());
+            heap.Sort();
+            Console.WriteLine(heap.printArray());
             Console.ReadLine();
         }
     }
