@@ -1,5 +1,14 @@
 ﻿using System;
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	File Name:         Heap_Insert.cs
+//	Description:       This controls the heap, inserting deleting and sorting
+//
+//	Course:            CSCI 3230 - Algorithms
+//	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University.
+//	Created:           Wednesday, Mar 25 2020
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace Heap_Insert
 {
     internal class MaxHeap
@@ -141,7 +150,7 @@ namespace Heap_Insert
             string output = ""; //string formatted for output
             for (int i = 0; i < max_size; i++)
             {
-                output += h[i + 1] + " "; //fill with items in heap
+                output += h[i + 1] + "\n"; //fill with items in heap
             }
             return output;//return the formatted string
         }
