@@ -1,0 +1,14 @@
+1|Gray's lily|Lilium grayi|36.186622|-82.137222|08-02-2008|Barrett||
+2|false garlic|Nothoscordum kunth|36.278356|-82.341585|09-22-2010|Smith||
+3|common dandelion|Taraxacum officinale|36.298904|-82.376797|07-07-2007|Jones||
+4|pin cherry|Prunus pensylvanica|36.621994|-82.427673|05-22-1978|Jones||
+5|puncturevine|Tribulus terrestris L.|36.458698|-81.914063|01-01-1985|Hartwig||
+6|laxleaf yelloweyed grass|Xyris laxifolia Mart.|36.670475|-81.537781|09-01-1992|Smith||
+7|arrowleaf violet|Viola sagittata Aiton|36.390187|-81.595459|07-15-2009|Barnes||
+8|purple beautyberry|Callicarpa dichotoma|36.295131|-82.067871|11-27-2010|Adams||
+9|rockweed|Pilea microphylla|36.136692|-82.059631|09-22-2010|Smith||
+10|sugarberry|Celtis laevigata Willd.|36.135583|-82.330170|08-02-2008|Barrett||
+11|mountain silverbell|Halesia tetraptera Ellis|36.288821|-82.247772|04-04-2004|Jones||
+12|American bur-reed|Sparganium americanum|36.313170|-82.370682|12-01-1993|Adams||
+13|eastern poison ivy|Toxicodendron radicans|35.953535|-82.556419|07-04-2005|Hartwig||
+14|alligatorweed|Alternanthera philoxeroides|36.610824|-81.647644|02-03-2011|Adams||

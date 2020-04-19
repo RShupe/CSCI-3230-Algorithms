@@ -1,0 +1,3 @@
+1|Gray's lily|Lilium grayi|36.186622|-82.137222|08-02-2008|Barrett|5|
+2|false garlic|Nothoscordum kunth|36.278356|-82.341585|09-22-2010|Smith|20|
+3|common dandelion|Taraxacum officinale|36.298904|-82.376797|07-07-2007|Jones|30|
