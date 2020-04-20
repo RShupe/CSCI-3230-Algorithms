@@ -21,7 +21,7 @@ namespace Project4
 
 
        
-        public void ProcessBinaryFile(string binaryFileName, int size, int fileNum)
+        public int ProcessBinaryFile(string binaryFileName, int size, int fileNum)
         {
             heap = new MaxHeap(size);
             using (FileStream fs2 = new FileStream(binaryFileName, FileMode.Open))
@@ -29,30 +29,37 @@ namespace Project4
                 using (BinaryReader r = new BinaryReader(fs2))
                 {
                     int index = 1;
+                    int newMax = heap.max_size;
                     while (r.BaseStream.Position != r.BaseStream.Length)
                     {
-                        if (index <= heap.max_size)
+                        if (index <= newMax)
                         {
                             heap.Insert(r.ReadInt32());
                             index++;
                         }
                         else
                         {
-                            break;
+                            heap.Sort();
+                            fileNum++;
+                            PrintHeapToFile(fileNum);
+                            newMax = heap.max_size + index -1;
+                            heap = new MaxHeap(size);
                         }
-                    }   
+                    }
+                    heap.Sort();
+                    fileNum++;
+                    PrintHeapToFile(fileNum);
+                    return fileNum;
                 }
             }
 
-            heap.Sort();
             
-            PrintHeapToFile(fileNum);
             
         } // ProcessBinaryFile()
 
         public void PrintHeapToFile(int fileNum)
         {
-            File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "\\temp" + (fileNum) + ".txt", heap.printArray());
+            File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "\\" + (fileNum) + ".txt", heap.printArray());
         }
 
     } // class binhandler

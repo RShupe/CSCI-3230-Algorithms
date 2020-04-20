@@ -11,10 +11,12 @@ using System.Windows.Forms;
 
 namespace Project4
 {
-    public partial class Form1 : Form
+    public partial class frm_Main : Form
     {
         int fileNum = 0;
-        public Form1()
+        bool fileLoaded = false;
+        List<string> fileNames = new List<String>();
+        public frm_Main()
         {
             InitializeComponent();
         }
@@ -29,20 +31,44 @@ namespace Project4
             if (DialogResult.Cancel != OpenDlg.ShowDialog())
             {
                 fileName = OpenDlg.FileName;
-                handler.ProcessBinaryFile(fileName, size, fileNum);
-                
+                lblNumFilesGenerated.Text = ((handler.ProcessBinaryFile(fileName, size+1, fileNum)).ToString());
+                numberofFilesBox.Value = Convert.ToInt32(lblNumFilesGenerated.Text);
+                fileLoaded = true;
+                countlbl.Text = "File is loaded!";
             }
-            fileNum++;
+            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            int numOfFiles = Convert.ToInt32(numberofFilesBox.Value);
             string path;
-            for(int i = 0; i < fileNum; i++)
+            for(int i = 0; i <= numOfFiles; i++)
             {
-                path = System.IO.Directory.GetCurrentDirectory() + "\\temp" + i + ".txt";
+                path = System.IO.Directory.GetCurrentDirectory() + "\\" + i + ".txt";
                 File.Delete(path);
             }
+        }
+
+
+
+        private void btn_Merge_Click(object sender, EventArgs e)
+        {
+            if(fileLoaded == false)
+            {
+                errorLabel.Text = "Error! No file loaded!";
+            }
+            else
+            {
+                errorLabel.Text = "";
+                int numOfFiles = Convert.ToInt32(numberofFilesBox.Value);
+
+                if (chkDisplay.Checked)
+                {
+                    displayBox.Text = "";
+                }
+            }
+            
         }
     }
 }
