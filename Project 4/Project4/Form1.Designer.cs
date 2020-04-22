@@ -194,9 +194,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(12, 187);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(118, 13);
+            this.label5.Size = new System.Drawing.Size(124, 13);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Numer of files to merge:";
+            this.label5.Text = "Number of files to merge:";
             // 
             // lblNumFilesGenerated
             // 

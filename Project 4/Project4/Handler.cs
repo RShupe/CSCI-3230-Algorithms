@@ -1,66 +1,97 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Runtime.InteropServices;
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	File Name:         Handler.cs
+//	Description:       This handles all of the processing involving reading from files and heaps
+//
+//	Course:            CSCI 3230 - Algorithms
+//	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University.
+//	Created:           Wednesday, Apr 22 2020
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace Project4
 {
-    // Class biorecord
-    // Manages the binary records and file access
-    class Handler
+    internal struct MergeFile
     {
-        
-        MaxHeap heap;
+        public int currentNum;
+        public String fileName;
+    }
 
-        public void ProcessTextFile(string textFileName)
+    internal class Handler
+    {
+        public int numberOfFiles;
+        private MaxHeap maxHeap;
+        private MinHeap minHeap;
+
+        public void MergeFiles(int numFilesAtATime)
         {
-  
-        } // ProcessTextFile()
+            int currentFileNum = 0;
+            for (int i = 0; i < numberOfFiles; i++)
+            {
+                for (int j = 0; j < numFilesAtATime; j++)
+                {
+                }
+            }
+        }
 
-
-       
         public int ProcessBinaryFile(string binaryFileName, int size, int fileNum)
         {
-            heap = new MaxHeap(size);
+            MaxHeap last;
+            maxHeap = new MaxHeap(size);
             using (FileStream fs2 = new FileStream(binaryFileName, FileMode.Open))
             {
                 using (BinaryReader r = new BinaryReader(fs2))
                 {
                     int index = 1;
-                    int newMax = heap.max_size;
+                    int newMax = maxHeap.max_size;
                     while (r.BaseStream.Position != r.BaseStream.Length)
                     {
                         if (index <= newMax)
                         {
-                            heap.Insert(r.ReadInt32());
+                            maxHeap.Insert(r.ReadInt32());
                             index++;
                         }
                         else
                         {
-                            heap.Sort();
+                            maxHeap.Sort();
                             fileNum++;
                             PrintHeapToFile(fileNum);
-                            newMax = heap.max_size + index -1;
-                            heap = new MaxHeap(size);
+                            newMax = maxHeap.max_size + index - 1;
+                            maxHeap = new MaxHeap(size);
                         }
                     }
-                    heap.Sort();
+                }
+
+                try
+                {
+                    maxHeap.Sort();
                     fileNum++;
                     PrintHeapToFile(fileNum);
-                    return fileNum;
                 }
-            }
+                catch
+                {
+                    last = new MaxHeap(fileNum);
 
-            
-            
+                    for (int i = 1; i <= fileNum; i++)
+                    {
+                        last.Insert(maxHeap.h[i]);
+                    }
+
+                    last.Sort();
+                    fileNum++;
+                    File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "\\" + (fileNum) + ".txt", last.printArray());
+                }
+
+                this.numberOfFiles = fileNum;
+                return fileNum;
+            }
         } // ProcessBinaryFile()
 
         public void PrintHeapToFile(int fileNum)
         {
-            File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "\\" + (fileNum) + ".txt", heap.printArray());
+            File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "\\" + (fileNum) + ".txt", maxHeap.printArray());
         }
-
     } // class binhandler
 }

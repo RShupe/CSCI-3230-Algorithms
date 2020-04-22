@@ -11,7 +11,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace Project4
 {
-    internal class MaxHeap
+    internal class MinHeap
     {
         public int max_size;           //max size of heap, this is included just to explain that size is not maximum size, but is current heap size.
         private int size;               //size of current heap
@@ -21,7 +21,7 @@ namespace Project4
         /// MaxHeap - No arg constructor
         /// </summary>
         ///
-        public MaxHeap()
+        public MinHeap()
         {
         }
 
@@ -29,7 +29,7 @@ namespace Project4
         /// MaxHeap - constructor that accepts a max-size
         /// </summary>
         ///
-        public MaxHeap(int inSize)
+        public MinHeap(int inSize)
         {
             size = 0;
             max_size = inSize;
@@ -74,10 +74,10 @@ namespace Project4
             int l = 2 * i; //get index of the left child
             int r = 2 * i + 1; //get index of the right child
 
-            if (l < size && (h[l] > h[largest]) )//checks to see if the left child is larger than the parent
+            if (l < size && (h[l] < h[largest]) )//checks to see if the left child is larger than the parent
                 largest = l;
 
-            if (r < size && (h[r] > h[largest])) //checks to see if the right child is larger than the parent
+            if (r < size && (h[r] < h[largest])) //checks to see if the right child is larger than the parent
                 largest = r;
 
             if (largest != i) //if a new largest is found we need to swap them
@@ -111,7 +111,7 @@ namespace Project4
                 fixsize /= 2;
                 int temp; //temp variable for holding a string to swap with another
 
-                if (h[parentNode]< h[currentNode]) //place the new string in the correct spot
+                if (h[parentNode] > h[currentNode]) //place the new string in the correct spot
                 {
                     temp = h[parentNode];
                     h[parentNode] = h[currentNode];

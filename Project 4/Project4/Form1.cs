@@ -13,6 +13,7 @@ namespace Project4
 {
     public partial class frm_Main : Form
     {
+        Handler handler = new Handler();
         int fileNum = 0;
         bool fileLoaded = false;
         List<string> fileNames = new List<String>();
@@ -26,12 +27,12 @@ namespace Project4
             
             int size = Convert.ToInt32(sizebox.Value);
             string fileName = "";
-            Handler handler = new Handler();
+            
             OpenFileDialog OpenDlg = new OpenFileDialog();
             if (DialogResult.Cancel != OpenDlg.ShowDialog())
             {
                 fileName = OpenDlg.FileName;
-                lblNumFilesGenerated.Text = ((handler.ProcessBinaryFile(fileName, size+1, fileNum)).ToString());
+                lblNumFilesGenerated.Text = ((handler.ProcessBinaryFile(fileName, size, fileNum)).ToString());
                 numberofFilesBox.Value = Convert.ToInt32(lblNumFilesGenerated.Text);
                 fileLoaded = true;
                 countlbl.Text = "File is loaded!";
@@ -61,12 +62,14 @@ namespace Project4
             else
             {
                 errorLabel.Text = "";
-                int numOfFiles = Convert.ToInt32(numberofFilesBox.Value);
+                int numSortFiles = Convert.ToInt32(numberofFilesBox.Value);
+                handler.MergeFiles(numSortFiles);
 
                 if (chkDisplay.Checked)
                 {
-                    displayBox.Text = "";
+                    displayBox.Text = "insert output file text here";
                 }
+ 
             }
             
         }
