@@ -29,9 +29,10 @@ namespace Project4
             handler.DeleteTempFiles();
             displayBox.Text = "";
             errorLabel.Text = "";
-             size = Convert.ToInt32(sizebox.Value);
+            lblTime.Text = "Seconds: ";
+            size = Convert.ToInt32(sizebox.Value);
             string fileName = "";
-            
+
             OpenFileDialog OpenDlg = new OpenFileDialog();
             if (DialogResult.Cancel != OpenDlg.ShowDialog())
             {
@@ -41,12 +42,12 @@ namespace Project4
                 fileLoaded = true;
                 countlbl.Text = "File is loaded!";
             }
-            
+
         }
 
         private void btn_Merge_Click(object sender, EventArgs e)
         {
-            if(fileLoaded == false)
+            if (fileLoaded == false)
             {
                 errorLabel.Text = "Error! No file loaded!";
             }
@@ -78,7 +79,7 @@ namespace Project4
 
 
             }
-            
+
         }
 
         private void frm_Main_FormClosing(object sender, FormClosingEventArgs e)

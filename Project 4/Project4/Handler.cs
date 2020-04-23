@@ -47,7 +47,6 @@ namespace Project4
                         files[j].fileName = (System.IO.Directory.GetCurrentDirectory() + "\\" + (currentFileNum) + ".txt".ToString());
                         files[j].currentNum = Convert.ToInt32(File.ReadLines(files[j].fileName).Skip(0).First());
                         currentFileNum++;
-                        //filesLeft--;
                     }
                 }
                 else
@@ -80,11 +79,11 @@ namespace Project4
                     currentNumberLine++;
                 }
             }
-            int temp2 = Heap2.size;
+            int writeSize = Heap2.size;
             Heap2.max_size = Heap2.size;
             Heap2.Sort();
 
-            for(int i = 1; i < 10; i++)
+            for (int i = 1; i < 10; i++)
             {
                 try
                 {
@@ -97,29 +96,27 @@ namespace Project4
                 }
                 catch
                 {
-
                 }
-
             }
 
-            WriteToBin(Heap2, temp2);
+            WriteToBin(Heap2, writeSize);
 
             return output = Heap2.printArray();
         }
 
-        public void WriteToBin(Heap heap, int temp2)
+        public void WriteToBin(Heap heap, int size)
         {
-            using (BinaryWriter binWriter =
-                   new BinaryWriter(File.Open(System.IO.Directory.GetCurrentDirectory() + "\\" + "output.bin", FileMode.Create)))
-            {
-                for (int i = 1; i <= temp2; i++)
-                {
-                    binWriter.Write(heap.h[i]);
-                }
-                binWriter.Flush();
-                binWriter.Close();
-            }
+             using (BinaryWriter binWriter = new BinaryWriter(File.Open(System.IO.Directory.GetCurrentDirectory() + "\\" + "output.bin", FileMode.Create)))
+             {
+                 for (int i = 1; i <= size; i++)
+                 {
+                     binWriter.Write(heap.h[i]);
+                 }
+                 binWriter.Flush();
+                 binWriter.Close();
+             }
 
+            
         }
 
         public void DeleteTempFiles()
@@ -134,6 +131,7 @@ namespace Project4
 
         public int ProcessBinaryFile(string binaryFileName, int size, int fileNum)
         {
+            int temp = 0;
             Heap last;
             Heap1 = new Heap(size);
             using (FileStream fs2 = new FileStream(binaryFileName, FileMode.Open))
@@ -162,15 +160,16 @@ namespace Project4
 
                 try
                 {
+                    temp = Heap1.size;
                     Heap1.Sort();
                     fileNum++;
                     PrintHeapToFile(fileNum);
                 }
                 catch
                 {
-                    last = new Heap(fileNum);
+                    last = new Heap(temp);
 
-                    for (int i = 1; i <= fileNum; i++)
+                    for (int i = 1; i <= temp; i++)
                     {
                         last.Insert(Heap1.h[i]);
                     }

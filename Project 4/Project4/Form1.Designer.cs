@@ -213,6 +213,9 @@
             // 
             // displayBox
             // 
+            this.displayBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.displayBox.Location = new System.Drawing.Point(195, 11);
             this.displayBox.Name = "displayBox";
             this.displayBox.Size = new System.Drawing.Size(430, 275);
