@@ -1,9 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	File Name:         Program.cs
+//	Description:       This starts the frames of the program and handles execution
+//
+//	Course:            CSCI 3230 - Algorithms
+//	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University.
+//	Created:           Wednesday, Mar 25 2020
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace Project4
 {
     static class Program

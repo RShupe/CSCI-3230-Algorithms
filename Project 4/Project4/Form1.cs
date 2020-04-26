@@ -1,102 +1,140 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	File Name:         Form1.cs
+//	Description:       This is where the user spends all of their time. This file  interacts with the hander to read
+//                       in a binary file, and sorts it with
+//                       a given heap size and sort k files at a time
+//
+//	Course:            CSCI 3230 - Algorithms
+//	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University.
+//	Created:           Friday Apr 24, 2020
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace Project4
 {
     public partial class frm_Main : Form
     {
-        Handler handler = new Handler();
-        int fileNum = 0;
-        bool fileLoaded = false;
-        int size;
-        List<string> fileNames = new List<String>();
+        Handler handler = new Handler(); //initialize the hander object
+        int fileNum = 0;                 // the number of files generated
+        bool fileLoaded = false;         // flag that is set if a file is loaded into the system or not
+        int size;                        // int to store the heap size.
+
+        /// <summary>
+        /// frm_Main - Constructor for the form
+        /// </summary>
+        ///
         public frm_Main()
         {
-            InitializeComponent();
+            InitializeComponent(); //initialize the frame
         }
 
+        /// <summary>
+        /// binBtn_Click - this executes when the user clicks the load bin file button
+        /// </summary>
+        /// <param name="=sender">< /param>
+        /// <param name="=e">< /param>
         private void binBtn_Click(object sender, EventArgs e)
         {
-            handler.DeleteTempFiles();
+            handler.DeleteTempFiles(); //make sure all temp files are deleted before doing a calculation
             displayBox.Text = "";
             errorLabel.Text = "";
-            lblTime.Text = "Seconds: ";
-            size = Convert.ToInt32(sizebox.Value);
-            string fileName = "";
+            lblTime.Text = "Seconds: "; //clear out the time label
 
-            OpenFileDialog OpenDlg = new OpenFileDialog();
-            if (DialogResult.Cancel != OpenDlg.ShowDialog())
+            size = Convert.ToInt32(sizebox.Value); //get the heap size to split the files.
+            OpenFileDialog OpenDlg = new OpenFileDialog(); //new dialog box so the user can select a file
+
+            if (DialogResult.Cancel != OpenDlg.ShowDialog()) //if the user selects a file
             {
-                fileName = OpenDlg.FileName;
-                lblNumFilesGenerated.Text = ((handler.ProcessBinaryFile(fileName, size, fileNum)).ToString());
-                numberofFilesBox.Value = Convert.ToInt32(lblNumFilesGenerated.Text);
-                fileLoaded = true;
-                countlbl.Text = "File is loaded!";
+                string fileName = OpenDlg.FileName; // string to hold the file name
+
+                lblNumFilesGenerated.Text = ((handler.ProcessBinaryFile(fileName, size, fileNum)).ToString()); //call the handler to process the binary file
+                numberofFilesBox.Value = Convert.ToInt32(lblNumFilesGenerated.Text); //tell the user the number of files generated
+
+                fileLoaded = true; //set the loaded flag so the user can continue using the program
+                countlbl.Text = "File is loaded!"; //tell the user a file is loaded.
             }
 
         }
-
+        /// <summary>
+        /// bin_Merge_Click - this executes when the user clicks the merge button
+        /// </summary>
+        /// <param name="=sender">< /param>
+        /// <param name="=e">< /param>
         private void btn_Merge_Click(object sender, EventArgs e)
         {
             if (fileLoaded == false)
             {
-                errorLabel.Text = "Error! No file loaded!";
+                errorLabel.Text = "Error! No file loaded!"; // if no file is loaded display error
             }
             else
             {
-                Stopwatch time = new Stopwatch();
-                errorLabel.Text = "";
-                int numSortFiles = Convert.ToInt32(numberofFilesBox.Value);
+                Stopwatch time = new Stopwatch(); //stopwatch to record the time 
+                errorLabel.Text = ""; // no error - clear label
+                int numSortFiles = Convert.ToInt32(numberofFilesBox.Value); //get the number of files generated
 
 
-                if (chkDisplay.Checked)
+                if (chkDisplay.Checked) //check to see if the user wants to display the result or not
                 {
                     time.Start();
-                    displayBox.Text = handler.MergeFiles(numSortFiles, size);
+                    handler.MergeFiles(Convert.ToInt32(numberofFilesBox.Value), Convert.ToInt32(sizebox.Value)); //merge files
                     time.Stop();
 
-                    lblTime.Text = "Seconds: " + time.Elapsed.TotalMilliseconds / 1000;
+                    displayBox.Text = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "\\result.txt"); //update the textbox to read from the output file
+                    lblTime.Text = "Seconds: " + time.Elapsed.TotalMilliseconds / 1000; //display time
 
                 }
                 else
                 {
+                    displayBox.Text = ""; //clear out the text box
+
                     time.Start();
-                    handler.MergeFiles(numSortFiles, size);
+                    handler.MergeFiles(numSortFiles, size); //merge files
                     time.Stop();
 
-                    lblTime.Text = "Seconds: " + time.Elapsed.TotalMilliseconds / 1000;
+                    lblTime.Text = "Seconds: " + time.Elapsed.TotalMilliseconds / 1000; //display time
                 }
-                errorLabel.Text = "Saved as output.bin!";
+                errorLabel.Text = "Saved as result.bin!";
 
 
             }
 
         }
 
-        private void frm_Main_FormClosing(object sender, FormClosingEventArgs e)
+        /// <summary>
+        /// frm_Main_FormClosing - this makes sure all temp files are deleted when the user closes the program
+        /// </summary>
+        /// <param name="=sender">< /param>
+        /// <param name="=e">< /param>
+        private void Frm_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             handler.DeleteTempFiles();
         }
 
-        private void sizebox_ValueChanged(object sender, EventArgs e)
+        /// <summary>
+        /// sizebox_ValueChanged - If the user changes this, the data in the box wont be acurate, so delete the text
+        /// </summary>
+        /// <param name="=sender">< /param>
+        /// <param name="=e">< /param>
+        private void Sizebox_ValueChanged(object sender, EventArgs e)
         {
             displayBox.Text = "";
             errorLabel.Text = "";
         }
 
-        private void numberofFilesBox_ValueChanged(object sender, EventArgs e)
+        /// <summary>
+        /// numberofFilesBox_ValueChanged - If the user changes this, the data in the box wont be acurate, so delete the text
+        /// </summary>
+        /// <param name="=sender">< /param>
+        /// <param name="=e">< /param>
+        private void NumberofFilesBox_ValueChanged(object sender, EventArgs e)
         {
             displayBox.Text = "";
             errorLabel.Text = "";
         }
+
     }
 }

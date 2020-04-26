@@ -1,67 +1,68 @@
 ﻿using System;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//	File Name:         Heap.cs
-//	Description:       This controls the heap of ints, used for intially reading in the file.
+//	File Name:         ObjectHeap.cs
+//	Description:       Heap for Merge files sort via the current number in the node.
 //
 //	Course:            CSCI 3230 - Algorithms
 //	Author:            Ryan Shupe, shuper@etsu.edu, East Tennessee State University.
-//	Created:           Wednesday, Mar 25 2020
+//	Created:           Friday, Apr 24 2020
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace Project4
 {
-    internal class Heap
+    internal class ObjectHeap
     {
         public int max_size;           //max size of heap, this is included just to explain that size is not maximum size, but is current heap size.
         public int size;               //size of current heap
-        public int[] h;             //array of strings that the heap will use
+        public MergeFile[] h;          //array of mergefiles that the heap will use
 
         /// <summary>
         /// MaxHeap - No arg constructor
         /// </summary>
         ///
-        public Heap()
-        {
+        public ObjectHeap()
+        {// no arg constructor
         }
 
         /// <summary>
         /// MaxHeap - constructor that accepts a max-size
         /// </summary>
         ///
-        public Heap(int inSize)
+        public ObjectHeap(int inSize)
         {
             size = 0;
             max_size = inSize;
-            h = new int[max_size + 1];
+            h = new MergeFile[max_size + 1]; //create the array of mergefiles
         }
 
         /// <summary>
         /// extract - this method takes the root node and swaps it with the last node, decreasing the size
         /// </summary>
         ///
-        public void Extract()
+        public MergeFile Extract()
         {
-            int lastItem;
-            int root = h[1]; //the main root node string
-            try
+            if(size == 0)
             {
-                lastItem = h[size]; //string of the last item in the heap
-                h[1] = lastItem;
-            }
-            catch
-            {
-                throw new Exception("size is too largo");
+                throw new Exception("The heap is empty."); // if the heap is empty throw an exception
             }
 
+            MergeFile output;   //variable to hold the output node to send back to the handler
+            MergeFile lastItem; //variable to hold the last item in the array
+            MergeFile root = h[1]; //the main root node string
+
+            output = root; //make the output node the root node to send back to the hander. 
+
+            lastItem = h[size]; //string of the last item in the heap
+            h[1] = lastItem;
+         
             h[size] = root; //remove the first item and place in the last spot
 
-            size--;
-
-
+           size--;
 
             fixHeap(1); //we need to fix the heap starting with the root node
-            return;
+
+            return output; //return the extracted node
         }
 
         /// <summary>
@@ -74,15 +75,15 @@ namespace Project4
             int l = 2 * i; //get index of the left child
             int r = 2 * i + 1; //get index of the right child
 
-            if (l < size && (h[l] > h[largest]))//checks to see if the left child is larger than the parent
+            if (l < size && (h[l].currentNum < h[largest].currentNum) )//checks to see if the left child is larger than the parent
                 largest = l;
 
-            if (r < size && (h[r] > h[largest])) //checks to see if the right child is larger than the parent
+            if (r < size && (h[r].currentNum < h[largest].currentNum)) //checks to see if the right child is larger than the parent
                 largest = r;
 
             if (largest != i) //if a new largest is found we need to swap them
             {
-                int swap = h[i]; //string to hold for swapping two strings
+                MergeFile swap = h[i]; //string to hold for swapping two strings
                 h[i] = h[largest];
                 h[largest] = swap;
 
@@ -94,9 +95,9 @@ namespace Project4
         /// Insert - inserts an item into the heap and keeps the max heap format
         /// </summary>
         ///
-        public void Insert(int item)
+        public void Insert(MergeFile item)
         {
-            h[size + 1] = item;
+            h[size+1] = item;
             size++; //insert the item and increase the size by 1
 
             int fixsize = size;
@@ -109,9 +110,9 @@ namespace Project4
                 int currentNode = fixsize; //index of the current node we are at
                 int parentNode = fixsize / 2; //index of the current node's parent node
                 fixsize /= 2;
-                int temp; //temp variable for holding a string to swap with another
+                MergeFile temp; //temp variable for holding a node to swap with another
 
-                if (h[parentNode] < h[currentNode]) //place the new string in the correct spot
+                if (h[parentNode].currentNum > h[currentNode].currentNum) //place the new string in the correct spot
                 {
                     temp = h[parentNode];
                     h[parentNode] = h[currentNode];
@@ -132,24 +133,10 @@ namespace Project4
         {
             for (int x = 0; x < max_size; x++)
             {
-                Extract();
+                Extract(); //pull out the top node until the size is 0
             }
 
             return;
-        }
-
-        /// <summary>
-        /// Print - returns a string containing the heap contents
-        /// </summary>
-        ///
-        public string print()
-        {
-            string output = ""; //string formatted for output
-            for (int i = 0; i < size; i++)
-            {
-                output += h[i + 1] + " "; //fill with items in heap
-            }
-            return output;//return the formatted string
         }
 
         /// <summary>
@@ -163,13 +150,13 @@ namespace Project4
             {
                 if (i == max_size)
                 {
-                    output += h[i]; //end with no new line
+                    output += h[i].currentNum; //end with no new line
                 }
                 else
                 {
-                    output += h[i] + "\n"; //fill with items in heap
+                    output += h[i].currentNum + "\n"; //fill with items in heap
                 }
-
+               
             }
             return output;//return the formatted string
         }

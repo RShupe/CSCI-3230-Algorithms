@@ -78,7 +78,7 @@
             0,
             0,
             0});
-            this.sizebox.ValueChanged += new System.EventHandler(this.sizebox_ValueChanged);
+            this.sizebox.ValueChanged += new System.EventHandler(this.Sizebox_ValueChanged);
             // 
             // fileLbl
             // 
@@ -174,6 +174,11 @@
             23283,
             0,
             0});
+            this.numberofFilesBox.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.numberofFilesBox.Name = "numberofFilesBox";
             this.numberofFilesBox.Size = new System.Drawing.Size(52, 20);
             this.numberofFilesBox.TabIndex = 14;
@@ -182,7 +187,7 @@
             0,
             0,
             0});
-            this.numberofFilesBox.ValueChanged += new System.EventHandler(this.numberofFilesBox_ValueChanged);
+            this.numberofFilesBox.ValueChanged += new System.EventHandler(this.NumberofFilesBox_ValueChanged);
             // 
             // label5
             // 
@@ -277,7 +282,7 @@
             this.MinimumSize = new System.Drawing.Size(520, 316);
             this.Name = "frm_Main";
             this.Text = "Project 4";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_Main_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_Main_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.sizebox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberofFilesBox)).EndInit();
             this.ResumeLayout(false);
