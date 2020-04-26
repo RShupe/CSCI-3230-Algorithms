@@ -85,7 +85,7 @@ namespace Project4
                 int swap = h[i]; //string to hold for swapping two strings
                 h[i] = h[largest];
                 h[largest] = swap;
-
+                
                 fixHeap(largest); // call the method again
             }
         }

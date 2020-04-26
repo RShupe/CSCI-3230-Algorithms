@@ -24,7 +24,7 @@ namespace Project4
     internal class Handler
     {
         public int totalNumFiles;       //the total number of files
-        private int level = 1;          //the current level we are at
+        private int CurrentLevel = 1;   //the current level we are at
         private int currentFile = 1;    //the current file number we are at
 
         private ObjectHeap sortHeap;    //heap that is compatible for mergiles
@@ -36,75 +36,113 @@ namespace Project4
         /// </summary>
         /// <param name="=numFilesAtATime">< /param>
         /// <param name="=numLinesinFile">< /param>
-        public void MergeFiles(int numFilesAtATime, int numLinesinFile)
+        public void MergeFiles(int MaxFilesToMergeAtATime, int numLinesinFile)
         {
-            currentFile = 1;
+            int TotalNumFilesFromPrevLevel = totalNumFiles;
+            int NumFilesBuiltThisLevel;
+            int NumFilesRemainingToProcThisLevel;
+            int NumFilesToMergeThisTime;
             int sortFileNumber = 1;
+            
 
-
-
-            files = new MergeFile[numFilesAtATime];
-
-            for (int i = 0; i < numFilesAtATime; i++)
+            while (TotalNumFilesFromPrevLevel > 1) 
             {
-                files[i].fileName = System.IO.Directory.GetCurrentDirectory() + "\\~1-" + (currentFile) + ".txt";
-                files[i].lineNum = 0;
-                files[i].currentNum = Convert.ToInt32(File.ReadLines(files[i].fileName).Skip(0).First()); //first line
-                currentFile++;
-            }
+                NumFilesBuiltThisLevel = 0;
+                NumFilesRemainingToProcThisLevel = TotalNumFilesFromPrevLevel;
+                currentFile = 1;
 
-            sortHeap = new ObjectHeap(numFilesAtATime);
-
-            for (int i = 0; i < numFilesAtATime; i++)
-            {
-                sortHeap.Insert(files[i]); //insert 1st nums in the heap
-            }
-
-
-            sortHeap.fixHeap(1);
-            for (int i = 0; i < numLinesinFile * totalNumFiles * level; i++)
-            {
-                using (StreamWriter sw = File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (level + 1) + "-" + (sortFileNumber) + ".txt"))
+                while (NumFilesRemainingToProcThisLevel > 0)
                 {
-                    MergeFile extractedNode;
-                    try
+                    if(NumFilesRemainingToProcThisLevel > MaxFilesToMergeAtATime)
                     {
-                        sortHeap.fixHeap(1);
-                        extractedNode = sortHeap.Extract();
+                        NumFilesToMergeThisTime = MaxFilesToMergeAtATime; 
+                    }
+                    else 
+                    { 
+                        NumFilesToMergeThisTime = NumFilesRemainingToProcThisLevel; 
+                    }
 
-                        sw.WriteLine(extractedNode.currentNum);
+                    if(NumFilesRemainingToProcThisLevel == 1) 
+                    {
+                        /* rename the file to current level naming scheme - no need to waste processing time */
 
-                        for (int j = 0; j < files.Length; j++)
+                        File.Move(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (CurrentLevel) + "-" + currentFile + ".txt",
+                            System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (CurrentLevel+1) + "-" + sortFileNumber + ".txt");
+                        NumFilesBuiltThisLevel += 1;
+                    }
+                    else
+                    {
+                        /* merge NumFilesToMergeThisTime */
+                        files = new MergeFile[NumFilesToMergeThisTime];
+                        sortHeap = new ObjectHeap(NumFilesToMergeThisTime);
+
+                        for (int i = 0; i < NumFilesToMergeThisTime; i++)
                         {
-                            if (files[j].fileName == extractedNode.fileName)
-                            {
-                                try
-                                {
-                                    files[j].lineNum += 1;
-                                    files[j].currentNum = Convert.ToInt32(File.ReadLines(files[j].fileName).Skip(files[j].lineNum).First()) ;
+                            files[i].fileName = System.IO.Directory.GetCurrentDirectory() + "\\~" + CurrentLevel + "-" + (currentFile) + ".txt";
+                            files[i].lineNum = 0;
+                            files[i].currentNum = Convert.ToInt32(File.ReadLines(files[i].fileName).Skip(0).First()); //first line
+                            currentFile++;
+                        }
 
-                                    sortHeap.Insert(files[j]);
-                                }
-                                catch
+                        NumFilesBuiltThisLevel ++;
+
+                    }
+                    
+                    NumFilesRemainingToProcThisLevel -= MaxFilesToMergeAtATime;
+
+                    for (int i = 0; i < files.Length; i++)
+                    {
+                        sortHeap.Insert(files[i]); //insert 1st nums in the heap
+                    }
+
+                    using (StreamWriter sw = File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (
+                        CurrentLevel + 1) + "-" + (sortFileNumber) + ".txt"))
+                    {
+                        for (int i = 0; i < numLinesinFile * totalNumFiles; i++)
+                        {
+                            MergeFile extractedNode;
+                            try
+                            {
+                                extractedNode = sortHeap.Extract();
+
+                                sw.WriteLine(extractedNode.currentNum);
+
+                                for (int j = 0; j < files.Length; j++)
                                 {
-                                    Console.WriteLine("Reached End of file");
+                                    if (files[j].fileName == extractedNode.fileName)
+                                    {
+                                        try
+                                        {
+                                            files[j].lineNum += 1;
+                                            files[j].currentNum = Convert.ToInt32(File.ReadLines(files[j].fileName).Skip(files[j].lineNum).First());
+
+                                            sortHeap.Insert(files[j]);
+                                        }
+                                        catch
+                                        {
+                                            //sortHeap.fixHeap(1);
+                                            Console.WriteLine("Reached End of file");
+                                        }
+                                    }
                                 }
+                            }
+                            catch
+                            {
+                                break;
                             }
                         }
                     }
-                    catch
-                    {
 
-                    }
-
-
+                    sortFileNumber++;
                 }
+                CurrentLevel += 1;
+                currentFile = 1;
+                sortFileNumber = 1;
+                TotalNumFilesFromPrevLevel = NumFilesBuiltThisLevel;
             }
 
-            sortFileNumber++;
-
-            //File.Delete(System.IO.Directory.GetCurrentDirectory() + "\\result.txt");
-            //File.Move(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (level+1) + "-" + (sortFileNumber-1) + ".txt", System.IO.Directory.GetCurrentDirectory() + "\\result.txt");
+            File.Delete(System.IO.Directory.GetCurrentDirectory() + "\\result.txt");
+            File.Move(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (CurrentLevel) + "-" + (sortFileNumber) + ".txt", System.IO.Directory.GetCurrentDirectory() + "\\result.txt");
             return;
         }
 
@@ -130,7 +168,7 @@ namespace Project4
         /// <param name="=fileNum">< /param>
         public int ProcessBinaryFile(string binaryFileName, int size, int fileNum)
         {
-            level = 1;              // we are currently at level 1
+            CurrentLevel = 1;       // we are currently at level 1
             currentFile = 1;        //start with file 1-1
             int temp = 0;           //allocate a temp variable.
             Heap last;              //make a heap to hold the extra numbers that dont divide up as nice
@@ -154,26 +192,8 @@ namespace Project4
                         {
                             Heap1.Sort(); //sort the heap
                             fileNum++; //increase the file number
-                            /*for (int i = 0; i < 10; i++)
-                            {
-                                if (Heap1.h[i] > Heap1.h[i + 1])
-                                {
-                                    int temp2 = Heap1.h[i];
-                                    Heap1.h[i] = Heap1.h[i + 1];
-                                    Heap1.h[i + 1] = temp2;
-                                }
-                            }
-                            for (int i = 10; i < 0; i--)
-                            {
-                                if (Heap1.h[i] < Heap1.h[i - 1])
-                                {
-                                    int temp2 = Heap1.h[i];
-                                    Heap1.h[i] = Heap1.h[i - 1];
-                                    Heap1.h[i - 1] = temp2;
-                                }
-                            }*/
 
-                            PrintHeapToFile(level, fileNum, Heap1); //print the heap to a file
+                            PrintHeapToFile(CurrentLevel, fileNum, Heap1); //print the heap to a file
                             newMax = Heap1.max_size + index - 1; //increase the max size to keep track of what numbers we are reading in
                             Heap1 = new Heap(size); //reset the heap
                         }
@@ -182,42 +202,39 @@ namespace Project4
 
                 try
                 {
+                    Heap1.fixHeap(1);
                     temp = Heap1.size; //make a temp variable with the current heap size
                     Heap1.Sort(); //sort the heap
-                    /*
-                    for (int i = 0; i < 10; i++)
-                    {
-                        if (Heap1.h[i] > Heap1.h[i + 1])
-                        {
-                            int temp2 = Heap1.h[i];
-                            Heap1.h[i] = Heap1.h[i + 1];
-                            Heap1.h[i + 1] = temp2;
-                        }
-                    }
-                    for (int i = 10; i < 0; i--)
-                    {
-                        if (Heap1.h[i] < Heap1.h[i - 1])
-                        {
-                            int temp2 = Heap1.h[i];
-                            Heap1.h[i] = Heap1.h[i - 1];
-                            Heap1.h[i - 1] = temp2;
-                        }
-                    }*/
                     fileNum++;
-                    PrintHeapToFile(level, fileNum, Heap1); //print the heap to a file
+
+                    PrintHeapToFile(CurrentLevel, fileNum, Heap1); //print the heap to a file
+                    Heap1 = new Heap(size); //reset the heap
                 }
                 catch
                 {
                     last = new Heap(temp); //allocate space big enough for the last few numbers
 
+                    if (Heap1.h[0] > Heap1.h[1])
+                    {
+                        int temp2 = Heap1.h[0];
+                        Heap1.h[0] = Heap1.h[1];
+                        Heap1.h[1] = temp2;
+                    }
                     for (int i = 1; i <= temp; i++)
                     {
                         last.Insert(Heap1.h[i]); //insert the extra numbers in this new heap
                     }
 
                     last.Sort(); //sort
+                    if (last.h[0] > last.h[1])
+                    {
+                        int temp2 = last.h[0];
+                        last.h[0] = last.h[1];
+                        last.h[1] = temp2;
+                    }
                     fileNum++;
-                    PrintHeapToFile(level, fileNum, last); //output the remaining numbers to a file
+                    PrintHeapToFile(CurrentLevel, fileNum, last); //output the remaining numbers to a file
+                    Heap1 = new Heap(size); //reset the heap
                 }
 
                 totalNumFiles = fileNum; //record the number of files for later
