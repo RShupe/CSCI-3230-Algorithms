@@ -62,16 +62,16 @@ namespace Project4
 
 
             sortHeap.fixHeap(1);
-            for (int i = 0; i < numLinesinFile * totalNumFiles; i++)
+            for (int i = 0; i < numLinesinFile * totalNumFiles * level; i++)
             {
-                using (StreamWriter sw = File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (level+1) + "-" + (sortFileNumber) + ".txt"))
+                using (StreamWriter sw = File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (level + 1) + "-" + (sortFileNumber) + ".txt"))
                 {
                     MergeFile extractedNode;
                     try
                     {
+                        sortHeap.fixHeap(1);
                         extractedNode = sortHeap.Extract();
 
-                        sortHeap.fixHeap(1);
                         sw.WriteLine(extractedNode.currentNum);
 
                         for (int j = 0; j < files.Length; j++)
@@ -81,7 +81,7 @@ namespace Project4
                                 try
                                 {
                                     files[j].lineNum += 1;
-                                    files[j].currentNum = Convert.ToInt32(File.ReadLines(files[j].fileName).Skip(files[j].lineNum));
+                                    files[j].currentNum = Convert.ToInt32(File.ReadLines(files[j].fileName).Skip(files[j].lineNum).First()) ;
 
                                     sortHeap.Insert(files[j]);
                                 }
@@ -94,10 +94,10 @@ namespace Project4
                     }
                     catch
                     {
-                       
+
                     }
 
-                    
+
                 }
             }
 
@@ -154,12 +154,12 @@ namespace Project4
                         {
                             Heap1.Sort(); //sort the heap
                             fileNum++; //increase the file number
-                            for(int i = 0; i < 10;i++)
+                            /*for (int i = 0; i < 10; i++)
                             {
                                 if (Heap1.h[i] > Heap1.h[i + 1])
                                 {
                                     int temp2 = Heap1.h[i];
-                                    Heap1.h[i] = Heap1.h[i+1];
+                                    Heap1.h[i] = Heap1.h[i + 1];
                                     Heap1.h[i + 1] = temp2;
                                 }
                             }
@@ -171,7 +171,7 @@ namespace Project4
                                     Heap1.h[i] = Heap1.h[i - 1];
                                     Heap1.h[i - 1] = temp2;
                                 }
-                            }
+                            }*/
 
                             PrintHeapToFile(level, fileNum, Heap1); //print the heap to a file
                             newMax = Heap1.max_size + index - 1; //increase the max size to keep track of what numbers we are reading in
@@ -184,6 +184,7 @@ namespace Project4
                 {
                     temp = Heap1.size; //make a temp variable with the current heap size
                     Heap1.Sort(); //sort the heap
+                    /*
                     for (int i = 0; i < 10; i++)
                     {
                         if (Heap1.h[i] > Heap1.h[i + 1])
@@ -201,7 +202,7 @@ namespace Project4
                             Heap1.h[i] = Heap1.h[i - 1];
                             Heap1.h[i - 1] = temp2;
                         }
-                    }
+                    }*/
                     fileNum++;
                     PrintHeapToFile(level, fileNum, Heap1); //print the heap to a file
                 }

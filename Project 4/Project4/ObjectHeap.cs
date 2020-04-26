@@ -76,10 +76,10 @@ namespace Project4
             int l = 2 * i; //get index of the left child
             int r = 2 * i + 1; //get index of the right child
 
-            if (l < size && (h[l].currentNum < h[smallest].currentNum))//checks to see if the left child is larger than the parent
+            if (l <= size && (h[l].currentNum < h[smallest].currentNum))//checks to see if the left child is larger than the parent
                 smallest = l;
 
-            if (r < size && (h[r].currentNum < h[smallest].currentNum)) //checks to see if the right child is larger than the parent
+            if (r <= size && (h[r].currentNum < h[smallest].currentNum)) //checks to see if the right child is larger than the parent
                 smallest = r;
 
             if (smallest != i) //if a new largest is found we need to swap them
