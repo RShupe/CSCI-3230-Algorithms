@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //	File Name:         Form1.cs
@@ -18,10 +19,10 @@ namespace Project4
 {
     public partial class frm_Main : Form
     {
-        Handler handler = new Handler(); //initialize the hander object
-        int fileNum = 0;                 // the number of files generated
-        bool fileLoaded = false;         // flag that is set if a file is loaded into the system or not
-        int size;                        // int to store the heap size.
+        private Handler handler = new Handler(); //initialize the hander object
+        private int fileNum = 0;                 // the number of files generated
+        private bool fileLoaded = false;         // flag that is set if a file is loaded into the system or not
+        private int size;                        // int to store the heap size.
 
         /// <summary>
         /// frm_Main - Constructor for the form
@@ -57,8 +58,8 @@ namespace Project4
                 fileLoaded = true; //set the loaded flag so the user can continue using the program
                 countlbl.Text = "File is loaded!"; //tell the user a file is loaded.
             }
-
         }
+
         /// <summary>
         /// bin_Merge_Click - this executes when the user clicks the merge button
         /// </summary>
@@ -72,10 +73,9 @@ namespace Project4
             }
             else
             {
-                Stopwatch time = new Stopwatch(); //stopwatch to record the time 
+                Stopwatch time = new Stopwatch(); //stopwatch to record the time
                 errorLabel.Text = ""; // no error - clear label
                 int numSortFiles = Convert.ToInt32(numberofFilesBox.Value); //get the number of files generated
-
 
                 if (chkDisplay.Checked) //check to see if the user wants to display the result or not
                 {
@@ -85,7 +85,6 @@ namespace Project4
 
                     displayBox.Text = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "\\result.txt"); //update the textbox to read from the output file
                     lblTime.Text = "Seconds: " + time.Elapsed.TotalMilliseconds / 1000; //display time
-
                 }
                 else
                 {
@@ -98,10 +97,7 @@ namespace Project4
                     lblTime.Text = "Seconds: " + time.Elapsed.TotalMilliseconds / 1000; //display time
                 }
                 errorLabel.Text = "Saved as result.bin!";
-
-
             }
-
         }
 
         /// <summary>
@@ -135,6 +131,5 @@ namespace Project4
             displayBox.Text = "";
             errorLabel.Text = "";
         }
-
     }
 }

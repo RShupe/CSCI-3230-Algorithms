@@ -1,4 +1,5 @@
 ﻿using System;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //	File Name:         ObjectHeap.cs
@@ -42,7 +43,7 @@ namespace Project4
         ///
         public MergeFile Extract()
         {
-            if(size == 0)
+            if (size == 0)
             {
                 throw new Exception("The heap is empty."); // if the heap is empty throw an exception
             }
@@ -51,14 +52,14 @@ namespace Project4
             MergeFile lastItem; //variable to hold the last item in the array
             MergeFile root = h[1]; //the main root node string
 
-            output = root; //make the output node the root node to send back to the hander. 
+            output = root; //make the output node the root node to send back to the hander.
 
             lastItem = h[size]; //string of the last item in the heap
             h[1] = lastItem;
-         
+
             h[size] = root; //remove the first item and place in the last spot
 
-           size--;
+            size--;
 
             fixHeap(1); //we need to fix the heap starting with the root node
 
@@ -71,23 +72,23 @@ namespace Project4
         ///
         public void fixHeap(int i)
         {
-            int largest = i; //current largest int found
+            int smallest = i; //current smallest int found
             int l = 2 * i; //get index of the left child
             int r = 2 * i + 1; //get index of the right child
 
-            if (l < size && (h[l].currentNum < h[largest].currentNum) )//checks to see if the left child is larger than the parent
-                largest = l;
+            if (l < size && (h[l].currentNum < h[smallest].currentNum))//checks to see if the left child is larger than the parent
+                smallest = l;
 
-            if (r < size && (h[r].currentNum < h[largest].currentNum)) //checks to see if the right child is larger than the parent
-                largest = r;
+            if (r < size && (h[r].currentNum < h[smallest].currentNum)) //checks to see if the right child is larger than the parent
+                smallest = r;
 
-            if (largest != i) //if a new largest is found we need to swap them
+            if (smallest != i) //if a new largest is found we need to swap them
             {
                 MergeFile swap = h[i]; //string to hold for swapping two strings
-                h[i] = h[largest];
-                h[largest] = swap;
+                h[i] = h[smallest];
+                h[smallest] = swap;
 
-                fixHeap(largest); // call the method again
+                fixHeap(smallest); // call the method again
             }
         }
 
@@ -97,7 +98,7 @@ namespace Project4
         ///
         public void Insert(MergeFile item)
         {
-            h[size+1] = item;
+            h[size + 1] = item;
             size++; //insert the item and increase the size by 1
 
             int fixsize = size;
@@ -156,7 +157,6 @@ namespace Project4
                 {
                     output += h[i].currentNum + "\n"; //fill with items in heap
                 }
-               
             }
             return output;//return the formatted string
         }

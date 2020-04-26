@@ -31,7 +31,6 @@ namespace Project4
         private Heap Heap1;             //heap to hold the inital numbers when the file was being broken down
         private MergeFile[] files;      //array of mergefiles so we can keep track of the currently selected files
 
-
         /// <summary>
         /// MergeFiles - this method combines the files merging K files at a file until getting the result
         /// </summary>
@@ -62,51 +61,52 @@ namespace Project4
             }
 
 
-
-            for (int i = 0; i < numFilesAtATime * numLinesinFile; i++)
+            sortHeap.fixHeap(1);
+            for (int i = 0; i < numLinesinFile * totalNumFiles; i++)
             {
-                using (StreamWriter sw = File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (level) + "-" + (sortFileNumber) + ".txt"))
+                using (StreamWriter sw = File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (level+1) + "-" + (sortFileNumber) + ".txt"))
                 {
                     MergeFile extractedNode;
                     try
                     {
                         extractedNode = sortHeap.Extract();
-                    }
-                    catch
-                    {
-                        break;
-                    }
 
-                    sortHeap.fixHeap(1);
-                    sw.WriteLine(extractedNode.currentNum);
+                        sortHeap.fixHeap(1);
+                        sw.WriteLine(extractedNode.currentNum);
 
-                    for (int j = 0; j < files.Length; j++)
-                    {
-                        if (files[j].fileName == extractedNode.fileName)
+                        for (int j = 0; j < files.Length; j++)
                         {
-                            try
+                            if (files[j].fileName == extractedNode.fileName)
                             {
-                                files[j].lineNum += 1;
-                                files[j].currentNum = Convert.ToInt32(File.ReadLines(files[j].fileName).Skip(files[j].lineNum).First());
+                                try
+                                {
+                                    files[j].lineNum += 1;
+                                    files[j].currentNum = Convert.ToInt32(File.ReadLines(files[j].fileName).Skip(files[j].lineNum));
 
-                                sortHeap.Insert(files[j]);
-                            }
-                            catch
-                            {
-                                Console.WriteLine("Reached End of file");
+                                    sortHeap.Insert(files[j]);
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("Reached End of file");
+                                }
                             }
                         }
                     }
+                    catch
+                    {
+                       
+                    }
+
+                    
                 }
             }
 
             sortFileNumber++;
 
-            File.Delete(System.IO.Directory.GetCurrentDirectory() + "\\result.txt");
-            File.Move(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (level) + "-" + (sortFileNumber-1) + ".txt", System.IO.Directory.GetCurrentDirectory() + "\\result.txt");
+            //File.Delete(System.IO.Directory.GetCurrentDirectory() + "\\result.txt");
+            //File.Move(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (level+1) + "-" + (sortFileNumber-1) + ".txt", System.IO.Directory.GetCurrentDirectory() + "\\result.txt");
             return;
         }
-
 
         /// <summary>
         /// DeleteTempFiles - This method deletes all of the temp files created.
@@ -122,7 +122,6 @@ namespace Project4
             }
         }
 
-
         /// <summary>
         /// ProcessBinaryFile - reads in a binary file, outputs multiple split up files from the given heap size.
         /// </summary>
@@ -137,7 +136,6 @@ namespace Project4
             Heap last;              //make a heap to hold the extra numbers that dont divide up as nice
             Heap1 = new Heap(size); //make aheap the size of the user defined size
 
-
             using (FileStream fs2 = new FileStream(binaryFileName, FileMode.Open)) //open the binary file
             {
                 using (BinaryReader r = new BinaryReader(fs2))
@@ -147,7 +145,7 @@ namespace Project4
 
                     while (r.BaseStream.Position != r.BaseStream.Length) //while they're are lines left to read
                     {
-                        if (index <= newMax) //if we have not hit the max size 
+                        if (index <= newMax) //if we have not hit the max size
                         {
                             Heap1.Insert(r.ReadInt32()); //insert the number at the current index
                             index++; //increment to the next position
@@ -156,8 +154,27 @@ namespace Project4
                         {
                             Heap1.Sort(); //sort the heap
                             fileNum++; //increase the file number
+                            for(int i = 0; i < 10;i++)
+                            {
+                                if (Heap1.h[i] > Heap1.h[i + 1])
+                                {
+                                    int temp2 = Heap1.h[i];
+                                    Heap1.h[i] = Heap1.h[i+1];
+                                    Heap1.h[i + 1] = temp2;
+                                }
+                            }
+                            for (int i = 10; i < 0; i--)
+                            {
+                                if (Heap1.h[i] < Heap1.h[i - 1])
+                                {
+                                    int temp2 = Heap1.h[i];
+                                    Heap1.h[i] = Heap1.h[i - 1];
+                                    Heap1.h[i - 1] = temp2;
+                                }
+                            }
+
                             PrintHeapToFile(level, fileNum, Heap1); //print the heap to a file
-                            newMax = Heap1.max_size + index - 1; //increase the max size to keep track of what numbers we are reading in 
+                            newMax = Heap1.max_size + index - 1; //increase the max size to keep track of what numbers we are reading in
                             Heap1 = new Heap(size); //reset the heap
                         }
                     }
@@ -167,6 +184,24 @@ namespace Project4
                 {
                     temp = Heap1.size; //make a temp variable with the current heap size
                     Heap1.Sort(); //sort the heap
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (Heap1.h[i] > Heap1.h[i + 1])
+                        {
+                            int temp2 = Heap1.h[i];
+                            Heap1.h[i] = Heap1.h[i + 1];
+                            Heap1.h[i + 1] = temp2;
+                        }
+                    }
+                    for (int i = 10; i < 0; i--)
+                    {
+                        if (Heap1.h[i] < Heap1.h[i - 1])
+                        {
+                            int temp2 = Heap1.h[i];
+                            Heap1.h[i] = Heap1.h[i - 1];
+                            Heap1.h[i - 1] = temp2;
+                        }
+                    }
                     fileNum++;
                     PrintHeapToFile(level, fileNum, Heap1); //print the heap to a file
                 }
@@ -185,7 +220,6 @@ namespace Project4
                 }
 
                 totalNumFiles = fileNum; //record the number of files for later
-                level++; //increase to the next level
 
                 return fileNum; //return the total number of files generated
             }
@@ -201,6 +235,5 @@ namespace Project4
         {
             File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (level) + "-" + (fileNum) + ".txt", heap.printArray()); //print all of the text that the print array method gives back to a file
         }
-
     } // class handler
 }
