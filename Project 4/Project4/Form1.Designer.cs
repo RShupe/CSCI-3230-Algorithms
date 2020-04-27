@@ -44,10 +44,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lblNumFilesGenerated = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
-            this.displayBox = new System.Windows.Forms.RichTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.outputBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.sizebox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberofFilesBox)).BeginInit();
             this.SuspendLayout();
@@ -216,17 +216,6 @@
             this.lblTime.TabIndex = 16;
             this.lblTime.Text = "Seconds: ";
             // 
-            // displayBox
-            // 
-            this.displayBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.displayBox.Location = new System.Drawing.Point(195, 11);
-            this.displayBox.Name = "displayBox";
-            this.displayBox.Size = new System.Drawing.Size(430, 275);
-            this.displayBox.TabIndex = 17;
-            this.displayBox.Text = "";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -254,15 +243,26 @@
             this.label8.TabIndex = 20;
             this.label8.Text = "5:";
             // 
+            // outputBox
+            // 
+            this.outputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputBox.FormattingEnabled = true;
+            this.outputBox.Location = new System.Drawing.Point(204, 11);
+            this.outputBox.Name = "outputBox";
+            this.outputBox.Size = new System.Drawing.Size(421, 277);
+            this.outputBox.TabIndex = 21;
+            // 
             // frm_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(637, 298);
+            this.Controls.Add(this.outputBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.displayBox);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblNumFilesGenerated);
             this.Controls.Add(this.numberofFilesBox);
@@ -307,10 +307,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblNumFilesGenerated;
         private System.Windows.Forms.Label lblTime;
-        private System.Windows.Forms.RichTextBox displayBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ListBox outputBox;
     }
 }
 

@@ -40,8 +40,9 @@ namespace Project4
         /// extract - this method takes the root node and swaps it with the last node, decreasing the size
         /// </summary>
         ///
-        public void Extract()
+        public int Extract()
         {
+            int output = 0;
             int lastItem;
             int root = h[1]; //the main root node string
             try
@@ -54,6 +55,7 @@ namespace Project4
                 throw new Exception("size is too largo");
             }
 
+            output = root;
             h[size] = root; //remove the first item and place in the last spot
 
             size--;
@@ -61,7 +63,7 @@ namespace Project4
 
 
             fixHeap(1); //we need to fix the heap starting with the root node
-            return;
+            return output;
         }
 
         /// <summary>
@@ -74,10 +76,10 @@ namespace Project4
             int l = 2 * i; //get index of the left child
             int r = 2 * i + 1; //get index of the right child
 
-            if (l <= size && (h[l] > h[largest]))//checks to see if the left child is larger than the parent
+            if (l <= size && (h[l] < h[largest]))//checks to see if the left child is larger than the parent
                 largest = l;
 
-            if (r <= size && (h[r] > h[largest])) //checks to see if the right child is larger than the parent
+            if (r <= size && (h[r] < h[largest])) //checks to see if the right child is larger than the parent
                 largest = r;
 
             if (largest != i) //if a new largest is found we need to swap them
@@ -111,7 +113,7 @@ namespace Project4
                 fixsize /= 2;
                 int temp; //temp variable for holding a string to swap with another
 
-                if (h[parentNode] < h[currentNode]) //place the new string in the correct spot
+                if (h[parentNode] > h[currentNode]) //place the new string in the correct spot
                 {
                     temp = h[parentNode];
                     h[parentNode] = h[currentNode];

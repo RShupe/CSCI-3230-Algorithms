@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +42,7 @@ namespace Project4
         private void binBtn_Click(object sender, EventArgs e)
         {
             handler.DeleteTempFiles(); //make sure all temp files are deleted before doing a calculation
-            displayBox.Text = "";
+            outputBox.Items.Clear();
             errorLabel.Text = "";
             lblTime.Text = "Seconds: "; //clear out the time label
 
@@ -83,12 +84,26 @@ namespace Project4
                     handler.MergeFiles(Convert.ToInt32(numberofFilesBox.Value), Convert.ToInt32(sizebox.Value)); //merge files
                     time.Stop();
 
-                    displayBox.Text = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "\\result.txt"); //update the textbox to read from the output file
+                    using (FileStream fs2 = new FileStream(System.IO.Directory.GetCurrentDirectory() + "\\result.bin", FileMode.Open)) //open the binary file
+                    {
+                        using (BinaryReader r = new BinaryReader(fs2))
+                        {
+                          
+
+                            while (r.BaseStream.Position != r.BaseStream.Length) //while they're are lines left to read
+                            {
+                                outputBox.Items.Add( r.ReadInt32());
+                            }
+                        }
+                    }
+
+
+                   // displayBox.Text = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "\\result.txt"); //update the textbox to read from the output file
                     lblTime.Text = "Seconds: " + time.Elapsed.TotalMilliseconds / 1000; //display time
                 }
                 else
                 {
-                    displayBox.Text = ""; //clear out the text box
+                    outputBox.Items.Clear();
 
                     time.Start();
                     handler.MergeFiles(numSortFiles, size); //merge files
@@ -117,7 +132,7 @@ namespace Project4
         /// <param name="=e">< /param>
         private void Sizebox_ValueChanged(object sender, EventArgs e)
         {
-            displayBox.Text = "";
+            outputBox.Items.Clear();
             errorLabel.Text = "";
         }
 
@@ -128,7 +143,7 @@ namespace Project4
         /// <param name="=e">< /param>
         private void NumberofFilesBox_ValueChanged(object sender, EventArgs e)
         {
-            displayBox.Text = "";
+            outputBox.Items.Clear();
             errorLabel.Text = "";
         }
     }
