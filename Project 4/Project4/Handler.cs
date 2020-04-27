@@ -86,54 +86,57 @@ namespace Project4
 
                         NumFilesBuiltThisLevel ++;
 
-                    }
-                    
-                    NumFilesRemainingToProcThisLevel -= MaxFilesToMergeAtATime;
-
-                    for (int i = 0; i < files.Length; i++)
-                    {
-                        sortHeap.Insert(files[i]); //insert 1st nums in the heap
-                    }
-
-                    using (StreamWriter sw = File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (
-                        CurrentLevel + 1) + "-" + (sortFileNumber) + ".txt"))
-                    {
-                        for (int i = 0; i < numLinesinFile * totalNumFiles; i++)
+                        for (int i = 0; i < files.Length; i++)
                         {
-                            MergeFile extractedNode;
-                            try
+                            sortHeap.Insert(files[i]); //insert 1st nums in the heap
+                        }
+
+                        using (StreamWriter sw = File.AppendText(System.IO.Directory.GetCurrentDirectory() + "\\" + "~" + (
+                            CurrentLevel + 1) + "-" + (sortFileNumber) + ".txt"))
+                        {
+                            for (int i = 0; i < numLinesinFile * totalNumFiles; i++)
                             {
-                                extractedNode = sortHeap.Extract();
-
-                                sw.WriteLine(extractedNode.currentNum);
-
-                                for (int j = 0; j < files.Length; j++)
+                                MergeFile extractedNode;
+                                try
                                 {
-                                    if (files[j].fileName == extractedNode.fileName)
-                                    {
-                                        try
-                                        {
-                                            files[j].lineNum += 1;
-                                            files[j].currentNum = Convert.ToInt32(File.ReadLines(files[j].fileName).Skip(files[j].lineNum).First());
+                                    extractedNode = sortHeap.Extract();
 
-                                            sortHeap.Insert(files[j]);
-                                        }
-                                        catch
+                                    sw.WriteLine(extractedNode.currentNum);
+
+                                    for (int j = 0; j < files.Length; j++)
+                                    {
+                                        if (files[j].fileName == extractedNode.fileName)
                                         {
-                                            //sortHeap.fixHeap(1);
-                                            Console.WriteLine("Reached End of file");
+                                            try
+                                            {
+                                                files[j].lineNum += 1;
+                                                files[j].currentNum = Convert.ToInt32(File.ReadLines(files[j].fileName).Skip(files[j].lineNum).First());
+
+                                                sortHeap.Insert(files[j]);
+                                            }
+                                            catch
+                                            {
+                                                //sortHeap.fixHeap(1);
+                                                Console.WriteLine("Reached End of file");
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            catch
-                            {
-                                break;
+                                catch
+                                {
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    sortFileNumber++;
+                        sortFileNumber++;
+                    }
+                    
+                    NumFilesRemainingToProcThisLevel -= MaxFilesToMergeAtATime;
+                    if (NumFilesRemainingToProcThisLevel < 0)
+                    {
+                        break;
+                    }
                 }
                 CurrentLevel += 1;
                 currentFile = 1;
