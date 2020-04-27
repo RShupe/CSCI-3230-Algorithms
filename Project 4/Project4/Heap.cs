@@ -125,55 +125,5 @@ namespace Project4
                 }
             } while (fixsize != 1);
         }
-
-        /// <summary>
-        /// Sort - calls extract until the size is 0, heap should be sorted at this point
-        /// </summary>
-        ///
-        public void Sort()
-        {
-            for (int x = 0; x < max_size; x++)
-            {
-                Extract();
-            }
-
-            return;
-        }
-
-        /// <summary>
-        /// Print - returns a string containing the heap contents
-        /// </summary>
-        ///
-        public string print()
-        {
-            string output = ""; //string formatted for output
-            for (int i = 0; i < size; i++)
-            {
-                output += h[i + 1] + " "; //fill with items in heap
-            }
-            return output;//return the formatted string
-        }
-
-        /// <summary>
-        /// PrintArray - returns a string containing the sorted array from the heap
-        /// </summary>
-        ///
-        public string printArray()
-        {
-            string output = ""; //string formatted for output
-            for (int i = 1; i <= max_size; i++)
-            {
-                if (i == max_size)
-                {
-                    output += h[i]; //end with no new line
-                }
-                else
-                {
-                    output += h[i] + "\n"; //fill with items in heap
-                }
-
-            }
-            return output;//return the formatted string
-        }
     }
 }

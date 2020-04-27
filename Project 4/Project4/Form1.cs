@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,26 +47,14 @@ namespace Project4
 
             size = Convert.ToInt32(sizebox.Value); //get the heap size to split the files.
             OpenFileDialog OpenDlg = new OpenFileDialog(); //new dialog box so the user can select a file
+            string fileName = "";
 
             if (DialogResult.Cancel != OpenDlg.ShowDialog()) //if the user selects a file
             {
-                string fileName = OpenDlg.FileName; // string to hold the file name
-
-                lblNumFilesGenerated.Text = ((handler.ProcessBinaryFile(fileName, size, fileNum)).ToString()); //call the handler to process the binary file
-                numberofFilesBox.Value = Convert.ToInt32(lblNumFilesGenerated.Text); //tell the user the number of files generated
-
+                fileName = OpenDlg.FileName; // string to hold the file name
                 fileLoaded = true; //set the loaded flag so the user can continue using the program
-                countlbl.Text = "File is loaded!"; //tell the user a file is loaded.
             }
-        }
 
-        /// <summary>
-        /// bin_Merge_Click - this executes when the user clicks the merge button
-        /// </summary>
-        /// <param name="=sender">< /param>
-        /// <param name="=e">< /param>
-        private void btn_Merge_Click(object sender, EventArgs e)
-        {
             if (fileLoaded == false)
             {
                 errorLabel.Text = "Error! No file loaded!"; // if no file is loaded display error
@@ -80,7 +67,10 @@ namespace Project4
 
                 if (chkDisplay.Checked) //check to see if the user wants to display the result or not
                 {
-                    time.Start();
+                    time.Start(); //start timer
+
+                    handler.ProcessBinaryFile(fileName, size, fileNum); //call the handler to process the binary file
+
                     handler.MergeFiles(Convert.ToInt32(numberofFilesBox.Value), Convert.ToInt32(sizebox.Value)); //merge files
                     time.Stop();
 
@@ -88,17 +78,14 @@ namespace Project4
                     {
                         using (BinaryReader r = new BinaryReader(fs2))
                         {
-                          
-
                             while (r.BaseStream.Position != r.BaseStream.Length) //while they're are lines left to read
                             {
-                                outputBox.Items.Add( r.ReadInt32());
+                                outputBox.Items.Add(r.ReadInt32()); //add the items from the result file to the list
                             }
                         }
                     }
 
-
-                   // displayBox.Text = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "\\result.txt"); //update the textbox to read from the output file
+                    // displayBox.Text = File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "\\result.txt"); //update the textbox to read from the output file
                     lblTime.Text = "Seconds: " + time.Elapsed.TotalMilliseconds / 1000; //display time
                 }
                 else
@@ -106,6 +93,7 @@ namespace Project4
                     outputBox.Items.Clear();
 
                     time.Start();
+                    handler.ProcessBinaryFile(fileName, size, fileNum); //call the handler to process the binary file
                     handler.MergeFiles(numSortFiles, size); //merge files
                     time.Stop();
 
@@ -113,7 +101,7 @@ namespace Project4
                 }
                 errorLabel.Text = "Saved as result.bin!";
             }
-        }
+            }
 
         /// <summary>
         /// frm_Main_FormClosing - this makes sure all temp files are deleted when the user closes the program
@@ -122,7 +110,7 @@ namespace Project4
         /// <param name="=e">< /param>
         private void Frm_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            handler.DeleteTempFiles();
+            handler.DeleteTempFiles(); //delete any extra files that might not havegotten deleted
         }
 
         /// <summary>
