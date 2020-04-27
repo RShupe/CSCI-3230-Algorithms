@@ -139,6 +139,7 @@ namespace Project4
                                                 {
                                                     //sortHeap.fixHeap(1);
                                                     Console.WriteLine("Reached End of file");
+                                                    File.Delete(files[j].fileName);
                                                 }
                                             }
                                         }
